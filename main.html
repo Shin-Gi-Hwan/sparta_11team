@@ -40,6 +40,42 @@
             margin: 30px auto 0px auto;
         }
 
+        .card {
+            margin: 8px;
+            overflow: hidden;
+            transform: scale(1.15); 
+            object-fit: cover; 
+            transition:opacity 0.5s, transform 1s;
+            cursor: pointer;
+            position: relative;
+        }
+
+        .card:hover {
+            transform: scale(1);
+            opacity: 0.5;
+        }
+
+        .read {
+            position: absolute;
+            top: 125px;
+            left: 0;
+            width: 100%;
+            text-align: center;
+            color: #fff;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            opacity: 0;
+            transition:all 0.5s;
+
+            text-shadow: 1px 1px 10px rgba(0, 0, 0, .5);
+        }
+
+        .card:hover .read {
+            transform: translateY(0);
+            opacity: 1;
+        }
+
 
         .mybtn {
             display: flex;
@@ -49,33 +85,60 @@
         }
     </style>
     <script>
+        let i = 0;
+        function typing() {
+            const content = "11조 - Next Level";
+
+            if (i < content.length) {
+                let txt = content.charAt(i);
+                document.querySelector('.text').innerHTML += txt;
+                i++;
+            }
+        }
+        setInterval(typing, 200)
     </script>
 </head>
 
 <body>
-    <div class="mytitle">
-        <h1>팀 이름</h1>
+    <div class="mytitle" data-trigger>
+        <h1 class="text"></h1>
     </div>
     <div class="team_intro">
-        <h2>팀 소개</h2>
+        <h3>팀 소개</h3>
     </div>
     <div class="cards">
         <div class="row row-cols-1 row-cols-md-5 g-4">
             <div class="col">
-                <div class="card">
+                <div class="card" onclick="location.href='personal.html'">
                     <img src="https://images.unsplash.com/photo-1446768500601-ac47e5ec3719?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1446&q=80"
                         class="card-img-top" alt="...">
                     <div class="card-body">
                         <ul class="list-group list-group-flush">
                             <li class="list-group-item">이름: </li>
-                            <li class="list-group-item">취미: </li>
+                            <li class="list-group-item">관심분야: </li>
                             <li class="list-group-item">MBTI: </li>
-                            <li class="list-group-item">목표: </li>
                             <li class="list-group-item"></li>
                         </ul>
-                        <div class="mybtn">
-                            <button class="btn btn-primary">상세보기</button>
-                        </div>
+                    </div>
+                    <div class="read">
+                        <h2>상세보기</h2>
+                    </div>
+                </div>
+            </div>
+            <div class="col">
+                <div class="card" onclick="location.href='personal.html'">
+                    <img src="https://images.unsplash.com/photo-1446768500601-ac47e5ec3719?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1446&q=80"
+                        class="card-img-top" alt="...">
+                    <div class="card-body">
+                        <ul class="list-group list-group-flush">
+                            <li class="list-group-item">이름: </li>
+                            <li class="list-group-item">관심분야: </li>
+                            <li class="list-group-item">MBTI: </li>
+                            <li class="list-group-item"></li>
+                        </ul>
+                    </div>
+                    <div class="read">
+                        <h2>상세보기</h2>
                     </div>
                 </div>
             </div>
@@ -86,14 +149,13 @@
                     <div class="card-body">
                         <ul class="list-group list-group-flush">
                             <li class="list-group-item">이름: </li>
-                            <li class="list-group-item">취미: </li>
+                            <li class="list-group-item">관심분야: </li>
                             <li class="list-group-item">MBTI: </li>
-                            <li class="list-group-item">목표: </li>
                             <li class="list-group-item"></li>
                         </ul>
-                        <div class="mybtn">
-                            <button class="btn btn-primary">상세보기</button>
-                        </div>
+                    </div>
+                    <div class="read">
+                        <h2>상세보기</h2>
                     </div>
                 </div>
             </div>
@@ -104,14 +166,13 @@
                     <div class="card-body">
                         <ul class="list-group list-group-flush">
                             <li class="list-group-item">이름: </li>
-                            <li class="list-group-item">취미: </li>
+                            <li class="list-group-item">관심분야: </li>
                             <li class="list-group-item">MBTI: </li>
-                            <li class="list-group-item">목표: </li>
                             <li class="list-group-item"></li>
                         </ul>
-                        <div class="mybtn">
-                            <button class="btn btn-primary">상세보기</button>
-                        </div>
+                    </div>
+                    <div class="read">
+                        <h2>상세보기</h2>
                     </div>
                 </div>
             </div>
@@ -122,32 +183,13 @@
                     <div class="card-body">
                         <ul class="list-group list-group-flush">
                             <li class="list-group-item">이름: </li>
-                            <li class="list-group-item">취미: </li>
+                            <li class="list-group-item">관심분야: </li>
                             <li class="list-group-item">MBTI: </li>
-                            <li class="list-group-item">목표: </li>
                             <li class="list-group-item"></li>
                         </ul>
-                        <div class="mybtn">
-                            <button class="btn btn-primary">상세보기</button>
-                        </div>
                     </div>
-                </div>
-            </div>
-            <div class="col">
-                <div class="card">
-                    <img src="https://images.unsplash.com/photo-1446768500601-ac47e5ec3719?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1446&q=80"
-                        class="card-img-top" alt="...">
-                    <div class="card-body">
-                        <ul class="list-group list-group-flush">
-                            <li class="list-group-item">이름: </li>
-                            <li class="list-group-item">취미: </li>
-                            <li class="list-group-item">MBTI: </li>
-                            <li class="list-group-item">목표: </li>
-                            <li class="list-group-item"></li>
-                        </ul>
-                        <div class="mybtn">
-                            <button class="btn btn-primary">상세보기</button>
-                        </div>
+                    <div class="read">
+                        <h2>상세보기</h2>
                     </div>
                 </div>
             </div>
