@@ -11,6 +11,13 @@
     <style>
 
         @import url('https://fonts.googleapis.com/css2?family=Black+Han+Sans&family=Gowun+Dodum&family=Jua&family=Kanit:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&family=Lilita+One&family=Londrina+Shadow&family=Moirai+One&family=Rubik+Dirt&family=Rubik+Vinyl&display=swap');
+        /* 팀 이름 글씨 폰트 */
+        .text {
+            font-family: "Moirai One", serif;
+            font-weight: 1000;
+            font-style: normal;
+
+        }
         
         .mytitle {
             height: 100px;
@@ -28,7 +35,7 @@
             height: 100px;
             width: 800px;
             color: black;
-            margin: 30px auto 0px auto;
+            margin: 20px auto 50px auto;
 
             display: flex;
             flex-direction: column;
@@ -41,14 +48,15 @@
         }
 
         .cards {
-            width: 1200px;
+            width: 1600px;
+            height: 350px;
             margin: 30px auto 0px auto;
         }
 
         .card {
-            margin: 8px;
+            margin: 15px;
             overflow: hidden;
-            transform: scale(1.15); 
+            transform: scale(1.16); 
             object-fit: cover; 
             transition:opacity 0.5s, transform 1s;
             cursor: pointer;
@@ -59,10 +67,10 @@
             transform: scale(1);
             opacity: 0.5;
         }
-
+        /* 상세보기 부분 위치 조정정*/
         .read {
             position: absolute;
-            top: 125px;
+            top: 100px;
             left: 0;
             width: 100%;
             text-align: center;
@@ -81,7 +89,21 @@
             opacity: 1;
         }
 
+        /* 카드 내 이름 정렬 */
+        .list-group-item {
+            text-align: center; 
+            font-weight: bold; 
+            
+        }
+        /* 카드 내 여백 */
+        .card-body {
+            padding:5px 10px 5px 10px;
+        }
 
+        /* 카드 내 이미지 크기 */
+        .card-img-top {
+            height: 230px;
+        }
         .mybtn {
             display: flex;
             flex-direction: column;
@@ -93,13 +115,7 @@
             background-position: center;
             background-size: cover;
         }
-        /* 팀 이름 글씨 폰트 */
-        .text {
-            font-family: "Moirai One", serif;
-            font-weight: 1000;
-            font-style: normal;
-
-        }
+        
     </style>
     <script>
         let i = 0;
@@ -132,9 +148,7 @@
                         class="card-img-top" alt="...">
                     <div class="card-body">
                         <ul class="list-group list-group-flush">
-                            <li class="list-group-item">이름: </li>
-                            <li class="list-group-item">관심분야: </li>
-                            <li class="list-group-item">MBTI: </li>
+                            <li class="list-group-item">김지영</li>
                             <li class="list-group-item"></li>
                         </ul>
                     </div>
@@ -149,9 +163,7 @@
                         class="card-img-top" alt="...">
                     <div class="card-body">
                         <ul class="list-group list-group-flush">
-                            <li class="list-group-item">이름: </li>
-                            <li class="list-group-item">관심분야: </li>
-                            <li class="list-group-item">MBTI: </li>
+                            <li class="list-group-item">박성현</li>
                             <li class="list-group-item"></li>
                         </ul>
                     </div>
@@ -166,9 +178,7 @@
                         class="card-img-top" alt="...">
                     <div class="card-body">
                         <ul class="list-group list-group-flush">
-                            <li class="list-group-item">이름: </li>
-                            <li class="list-group-item">관심분야: </li>
-                            <li class="list-group-item">MBTI: </li>
+                            <li class="list-group-item">신기환</li>
                             <li class="list-group-item"></li>
                         </ul>
                     </div>
@@ -183,9 +193,7 @@
                         class="card-img-top" alt="...">
                     <div class="card-body">
                         <ul class="list-group list-group-flush">
-                            <li class="list-group-item">이름: </li>
-                            <li class="list-group-item">관심분야: </li>
-                            <li class="list-group-item">MBTI: </li>
+                            <li class="list-group-item">서지원</li>
                             <li class="list-group-item"></li>
                         </ul>
                     </div>
@@ -200,9 +208,7 @@
                         class="card-img-top" alt="...">
                     <div class="card-body">
                         <ul class="list-group list-group-flush">
-                            <li class="list-group-item">이름: </li>
-                            <li class="list-group-item">관심분야: </li>
-                            <li class="list-group-item">MBTI: </li>
+                            <li class="list-group-item">오명제</li>
                             <li class="list-group-item"></li>
                         </ul>
                     </div>
