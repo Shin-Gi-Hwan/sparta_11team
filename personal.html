@@ -97,7 +97,7 @@
         const db = getFirestore(app);
 
         $("#home").click(async function () {
-            window.location.href = "url";
+            window.location.href = "file:///C:/Users/sng02/OneDrive/%EB%B0%94%ED%83%95%20%ED%99%94%EB%A9%B4/sparta/mini_proj/sparta_11team/main.html";
         })
 
         $("#addressbtn_git").click(async function () {
@@ -204,8 +204,153 @@
     </div>
 
     <div class="guest_book">
-        <p>guest_book</p>
+        <header>
+            <h1>방명록에 오신 것을 환영합니다</h1>
+        </header>
+        <main>
+            <form id="guestbook-form">
+                <input type="text" id="name" placeholder="이름..." required />
+                <textarea id="message" placeholder="하고 싶은 말 있으면 적어주세요..." required></textarea>
+                <button type="submit">저장하기</button>
+            </form>
+            <ul class="messages" id="messages">
+                <!-- Messages will appear here -->
+            </ul>
+        </main>
     </div>
+    <script>
+        const form = document.getElementById('guestbook-form');
+        const messagesList = document.getElementById('messages');
+
+        form.addEventListener('submit', function (event) {
+            event.preventDefault();
+            const nameInput = document.getElementById('name');
+            const messageInput = document.getElementById('message');
+
+            if (nameInput.value.trim() === '' || messageInput.value.trim() === '') {
+                alert('Please fill in all fields.');
+                return;
+            }
+
+            const newMessage = document.createElement('li');
+
+            const name = document.createElement('strong');
+            name.textContent = nameInput.value;
+            newMessage.appendChild(name);
+
+            const messageText = document.createElement('p');
+            messageText.textContent = messageInput.value;
+            newMessage.appendChild(messageText);
+
+            const timestamp = document.createElement('span');
+            timestamp.classList.add('timestamp');
+            timestamp.textContent = `Posted on: ${new Date().toLocaleString()}`;
+            newMessage.appendChild(timestamp);
+
+            const deleteButton = document.createElement('button');
+            deleteButton.textContent = 'Delete';
+            deleteButton.addEventListener('click', function () {
+                messagesList.removeChild(newMessage);
+            });
+            newMessage.appendChild(deleteButton);
+
+            messagesList.insertBefore(newMessage, messagesList.firstChild); // Add new message to the top
+
+            nameInput.value = '';
+            messageInput.value = '';
+        });
+    </script>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f4f4f9;
+        }
+
+        header {
+            background-color: #6200ea;
+            color: white;
+            padding: 1rem;
+            text-align: center;
+        }
+
+        main {
+            max-width: 500px;
+            margin: 2rem auto;
+            padding: 1rem;
+            background: white;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            border-radius: 8px;
+        }
+
+        h1 {
+            margin-top: 0;
+        }
+
+        form {
+            margin-bottom: 2rem;
+        }
+
+        form textarea,
+        form input {
+            width: 100%;
+            margin-bottom: 1rem;
+            padding: 0.5rem;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            resize: none;
+        }
+
+        form button {
+            background-color: #6200ea;
+            color: white;
+            border: none;
+            padding: 0.5rem 1rem;
+            cursor: pointer;
+            border-radius: 4px;
+        }
+
+        form button:hover {
+            background-color: #3700b3;
+        }
+
+        .messages {
+            list-style: none;
+            padding: 0;
+        }
+
+        .messages li {
+            background: #f9f9f9;
+            margin-bottom: 1rem;
+            padding: 1rem;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            position: relative;
+        }
+
+        .messages .timestamp {
+            font-size: 0.85rem;
+            color: #666;
+            margin-top: 0.5rem;
+        }
+
+        .messages button {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            background: #ff5252;
+            color: white;
+            border: none;
+            padding: 0.25rem 0.5rem;
+            cursor: pointer;
+            border-radius: 4px;
+        }
+
+        .messages button:hover {
+            background: #d32f2f;
+        }
+    </style>
 </body>
 
 </html>
