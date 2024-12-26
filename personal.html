@@ -49,9 +49,7 @@
             text-align: center;
         }
 
-        .select>button {
-            
-        }
+        .select>button {}
 
         .content {
             background-color: yellow;
@@ -72,7 +70,37 @@
             background-color: gray;
         }
     </style>
-    <script>
+    <script type="module">
+        // Firebase SDK 라이브러리 가져오기
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/9.22.0/firebase-app.js";
+        import { getFirestore } from "https://www.gstatic.com/firebasejs/9.22.0/firebase-firestore.js";
+        import { collection, addDoc } from "https://www.gstatic.com/firebasejs/9.22.0/firebase-firestore.js";
+        import { getDocs } from "https://www.gstatic.com/firebasejs/9.22.0/firebase-firestore.js";
+
+        // Firebase 구성 정보 설정
+        // For Firebase JS SDK v7.20.0 and later, measurementId is optional
+        // seonghyeon
+        const firebaseConfig = {
+            apiKey: "AIzaSyDPdHH_v_ePSAFT_kwGYj5E078KG9nll7I",
+            authDomain: "sparta-c1ff5.firebaseapp.com",
+            projectId: "sparta-c1ff5",
+            storageBucket: "sparta-c1ff5.firebasestorage.app",
+            messagingSenderId: "1072351614216",
+            appId: "1:1072351614216:web:6be277b8a8767985eec8bd",
+            measurementId: "G-SMHTZXQ4WH"
+        };
+
+        // Firebase 인스턴스 초기화
+        const app = initializeApp(firebaseConfig);
+        const db = getFirestore(app);
+
+        $("#addressbtn_git").click(async function () {
+            window.location.href = "https://github.com/sng02006";
+        })
+
+        $("#addressbtn_insta").click(async function () {
+            window.location.href = "https://www.instagram.com/seonghyeo._.n/";
+        })
 
     </script>
 </head>
@@ -85,8 +113,8 @@
         </div>
 
         <div class="address">
-            <button id="addressbtn" type="button" class="btn btn-light">Github</button>
-            <button id="addressbtn" type="button" class="btn btn-light">Instagram</button>
+            <button id="addressbtn_git" type="button" class="btn btn-light">Github</button>
+            <button id="addressbtn_insta" type="button" class="btn btn-light">Instagram</button>
         </div>
 
         <div class="mypostingbox" id="postingbox">
