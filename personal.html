@@ -1,20 +1,179 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>개인 페이지</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
-    integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-<style>
+        integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <style>
+        .profile {
+            background-color: aqua;
+            display: flex;
+        }
 
-</style>
-<script>
+        .personal_picture {
+            background-color: green;
+            margin: 100px 0 0 100px;
+        }
 
-</script>
+        .address {
+            background-color: blue;
+            margin: 100px 0 0 50px;
+            height: 100px;
+            width: 100px;
+        }
+
+        .address>button {
+            margin-bottom: 10px;
+            width: 100%;
+        }
+
+        .mypostingbox {
+            width: 400px;
+            margin: 10px 100px 10px auto;
+
+            border: 1px solid white;
+            padding: 20px;
+            border-radius: 5px;
+        }
+
+        .mypostingbox>button {
+            width: 100%;
+        }
+
+        .select {
+            background-color: greenyellow;
+            text-align: center;
+        }
+
+        .select>button {
+            
+        }
+
+        .content {
+            background-color: yellow;
+            text-align: center;
+        }
+
+        .content>button {
+            margin-top: 20px;
+        }
+
+        .mycards {
+            margin: 10px auto 10px auto;
+            width: 1000px;
+            height: 350px;
+        }
+
+        .guest_book {
+            background-color: gray;
+        }
+    </style>
+    <script>
+
+    </script>
 </head>
+
 <body>
-    <h1>개인페이지 작성</h1>
+    <div class="profile">
+        <div class="personal_picture">
+            <image src="https://movie-phinf.pstatic.net/20210728_221/1627440327667GyoYj_JPEG/movie_image.jpg"
+                style="width:160px; height:200px;">
+        </div>
+
+        <div class="address">
+            <button id="addressbtn" type="button" class="btn btn-light">Github</button>
+            <button id="addressbtn" type="button" class="btn btn-light">Instagram</button>
+        </div>
+
+        <div class="mypostingbox" id="postingbox">
+            <div class="form-floating mb-3">
+                <input type="email" class="form-control" id="image" placeholder="이미지 링크">
+                <label for="floatingInput">이미지 링크</label>
+            </div>
+            <div class="input-group mb-3">
+                <label class="input-group-text" for="inputGroupSelect01">아이콘 선택</label>
+                <select class="form-select" id="star">
+                    <option selected>아이콘 선택</option>
+                    <option>⭐</option>
+                    <option>⭐⭐</option>
+                    <option>⭐⭐⭐</option>
+                    <option>⭐⭐⭐⭐</option>
+                    <option>⭐⭐⭐⭐⭐</option>
+                </select>
+            </div>
+            <div class="form-floating mb-3">
+                <input type="email" class="form-control" id="title" placeholder="영화 제목">
+                <label for="floatingInput">소재</label>
+            </div>
+            <div class="form-floating mb-3">
+                <input type="email" class="form-control" id="comment" placeholder="추천 이유">
+                <label for="floatingInput">내용</label>
+            </div>
+            <button id="postingbtn" type="button" class="btn btn-danger">추가하기</button>
+        </div>
+    </div>
+
+    <div class="select">
+        <button type="button" class="btn btn-light">취미</button>
+        <button type="button" class="btn btn-light">좋아하는 것</button>
+        <button type="button" class="btn btn-light">싫어하는 것</button>
+    </div>
+
+    <div class="content">
+        <button type="button" class="btn btn-light">취미</button>
+        <div class="mycards">
+            <div id="card" class="row row-cols-1 row-cols-md-4 g-4">
+                <div class="col">
+                    <div class="card h-100">
+                        <img src="https://movie-phinf.pstatic.net/20210728_221/1627440327667GyoYj_JPEG/movie_image.jpg"
+                            class="card-img-top" alt="..." style="height:200px;">
+                        <div class="card-body">
+                            <h5 class="card-title">소재</h5>
+                            <p class="card-text">내용</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col">
+                    <div class="card h-100">
+                        <img src="https://images.unsplash.com/photo-1446768500601-ac47e5ec3719?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1446&q=80"
+                            class="card-img-top" alt="..." style="height:200px;">
+                        <div class="card-body">
+                            <h5 class="card-title">소재</h5>
+                            <p class="card-text">내용</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col">
+                    <div class="card h-100">
+                        <img src="https://movie-phinf.pstatic.net/20210728_221/1627440327667GyoYj_JPEG/movie_image.jpg"
+                            class="card-img-top" alt="..." style="height:200px;">
+                        <div class="card-body">
+                            <h5 class="card-title">소재</h5>
+                            <p class="card-text">내용</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col">
+                    <div class="card h-100">
+                        <img src="https://movie-phinf.pstatic.net/20210728_221/1627440327667GyoYj_JPEG/movie_image.jpg"
+                            class="card-img-top" alt="..." style="height:200px;">
+                        <div class="card-body">
+                            <h5 class="card-title">소재</h5>
+                            <p class="card-text">내용</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="guest_book">
+        <p>guest_book</p>
+    </div>
 </body>
+
 </html>
