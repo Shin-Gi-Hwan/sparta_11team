@@ -9,11 +9,13 @@
         integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <style>
+
+        @import url('https://fonts.googleapis.com/css2?family=Black+Han+Sans&family=Gowun+Dodum&family=Jua&family=Kanit:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&family=Lilita+One&family=Londrina+Shadow&family=Moirai+One&family=Rubik+Dirt&family=Rubik+Vinyl&display=swap');
+        
         .mytitle {
             height: 100px;
             width: 500px;
-            color: white;
-            background-color: green;
+            color: black;
             margin: 30px auto 0px auto;
 
             display: flex;
@@ -24,15 +26,18 @@
 
         .team_intro {
             height: 100px;
-            width: 700px;
-            color: white;
-            background-color: green;
+            width: 800px;
+            color: black;
             margin: 30px auto 0px auto;
 
             display: flex;
             flex-direction: column;
             align-items: center;
             justify-content: center;
+            
+            text-align: center;
+            font-family: "Jua", serif;
+            font-weight: 300;
         }
 
         .cards {
@@ -83,11 +88,23 @@
             align-items: center;
             justify-content: center;
         }
+        body {
+            background-image: url('https://img.freepik.com/free-vector/cookie-background-cafe-wallpaper-vector_53876-144624.jpg?t=st=1735189697~exp=1735193297~hmac=9d8498d664fe79a46542f1fe20ad8ef1bac68d41e3f268e0db103019d3cbb584&w=1060');
+            background-position: center;
+            background-size: cover;
+        }
+        /* 팀 이름 글씨 폰트 */
+        .text {
+            font-family: "Moirai One", serif;
+            font-weight: 1000;
+            font-style: normal;
+
+        }
     </style>
     <script>
         let i = 0;
         function typing() {
-            const content = "11조 - Next Level";
+            const content = "11조 Next Level";
 
             if (i < content.length) {
                 let txt = content.charAt(i);
@@ -105,7 +122,7 @@
         <h1 class="text"></h1>
     </div>
     <div class="team_intro">
-        <h3>팀 소개</h3>
+        <h3>개발자로 성장하고자 하는 내향인들의 자기소개 공간입니다. <br> 상세보기를 눌러 팀원들의 소개를 확인해보세요! </h3>
     </div>
     <div class="cards">
         <div class="row row-cols-1 row-cols-md-5 g-4">
