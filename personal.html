@@ -160,7 +160,7 @@
         })
 
         $("#hobby").click(async function () {
-            $('#mycards').remove();
+            $('#mycards').empty();
             $('#category_btn').text("취미");
             //DB에서 불러와서 넣기
             const querySnapshot = await getDocs(collection(db, "personal"));
