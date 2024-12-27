@@ -153,11 +153,13 @@
 
             querySnapshot.forEach((doc) => {
 
-                let row = doc.data();
+                let row = doc("kim");
                 let name = doc.data().hobby;
                 let content = doc.data().hobbycontent;
                 let image = doc.data().hobbyimage;
 
+
+                console.log(row)
                 console.log(name)
                 console.log(content)
                 console.log(image)
