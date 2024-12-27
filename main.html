@@ -10,20 +10,33 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <style>
 
-        @import url('https://fonts.googleapis.com/css2?family=Black+Han+Sans&family=Gowun+Dodum&family=Jua&family=Kanit:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&family=Lilita+One&family=Londrina+Shadow&family=Moirai+One&family=Rubik+Dirt&family=Rubik+Vinyl&display=swap');
+        @import url('https://fonts.googleapis.com/css2?family=Black+Han+Sans&family=Gowun+Dodum&family=Jua&family=Kanit:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&family=Lilita+One&family=Londrina+Shadow&family=Moirai+One&family=Rubik+Dirt&family=Rubik+Vinyl&family=Sacramento&display=swap');
         /* 팀 이름 글씨 폰트 */
         .text {
-            font-family: "Moirai One", serif;
+            color:white ;
+            font-family: "Sacramento", serif;
             font-weight: 1000;
+            font-size: 50px;
             font-style: normal;
+            font-style: italic;
+
+            text-shadow:
+               0 0 7px rgb(100, 31, 147),
+               0 0 10px rgb(100, 31, 147),
+               0 0 21px rgb(100, 31, 147),
+               0 0 42px rgb(100, 31, 147),
+               0 0 82px rgb(100, 31, 147),
+               0 0 92px rgb(100, 31, 147),
+               0 0 102px rgb(100, 31, 147),
+               0 0 151px rgb(100, 31, 147);
 
         }
         
         .mytitle {
-            height: 100px;
+            height: 150px;
             width: 500px;
             color: black;
-            margin: 30px auto 0px auto;
+            margin: 60px auto 0px auto;
 
             display: flex;
             flex-direction: column;
@@ -31,11 +44,12 @@
             justify-content: center;
         }
 
+
         .team_intro {
             height: 100px;
             width: 800px;
-            color: black;
-            margin: 20px auto 50px auto;
+            color: white;
+            margin: 20px auto 0px auto;
 
             display: flex;
             flex-direction: column;
@@ -43,14 +57,18 @@
             justify-content: center;
             
             text-align: center;
-            font-family: "Jua", serif;
-            font-weight: 300;
+            font-family: "Sacramento", serif;
+            font-weight: 1500;
+            text-shadow:
+            0px 0px 7px #8f7777,
+            0px 0px 0px rgb(101 46 77 / 69%),
+            0px 0px 20px rgb(110, 35, 160)
         }
 
         .cards {
             width: 1600px;
             height: 350px;
-            margin: 30px auto 0px auto;
+            margin: 100px auto 0px auto;
         }
 
         .card {
@@ -67,7 +85,7 @@
             transform: scale(1);
             opacity: 0.5;
         }
-        /* 상세보기 부분 위치 조정정*/
+        /* 상세보기 부분 위치 조정*/
         .read {
             position: absolute;
             top: 100px;
@@ -111,16 +129,14 @@
             justify-content: center;
         }
         body {
-            background-image: url('https://img.freepik.com/free-vector/cookie-background-cafe-wallpaper-vector_53876-144624.jpg?t=st=1735189697~exp=1735193297~hmac=9d8498d664fe79a46542f1fe20ad8ef1bac68d41e3f268e0db103019d3cbb584&w=1060');
-            background-position: center;
-            background-size: cover;
+            background-color: rgb(0, 0, 0);
         }
         
     </style>
     <script>
         let i = 0;
         function typing() {
-            const content = "11조 Next Level";
+            const content = " 팀 11 :  Next Level  ";
 
             if (i < content.length) {
                 let txt = content.charAt(i);
