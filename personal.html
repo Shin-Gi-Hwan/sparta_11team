@@ -146,8 +146,6 @@
         })
 
         $("#hobby").click(async function () {
-            $('#card').empty();
-            $('#category_btn').text("취미");
             //DB에서 불러와서 넣기
             const querySnapshot = await getDocs(collection(db, "personal"));
 
@@ -167,11 +165,11 @@
                 let tHtml = `
                 <div class="col">
                     <div class="card">
-                        <img src="${hobbyimage}"
+                        <img src="${image}"
                             class="card-img-top" alt="...">
                         <div class="card-body">
-                            <h5 class="card-title">${hobby}</h5>
-                                <p class="card-text">${hobbycontent}</p>
+                            <h5 class="card-title">${name}</h5>
+                                <p class="card-text">${content}</p>
                         </div>
                      </div>
                 </div>`;
