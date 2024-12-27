@@ -159,7 +159,14 @@
             window.open("https://www.instagram.com/seonghyeo._.n/", "_blank");
         })
 
+        let isContentLoaded = false;
+
         $("#hobby").click(async function () {
+
+            if (isContentLoaded) {
+                console.log("콘텐츠가 이미 로드되었습니다.");
+                return; // 콘텐츠가 이미 추가된 경우 종료
+            }
             $('#mycards').empty();
             $('#category_btn').text("취미");
             //DB에서 불러와서 넣기
@@ -169,23 +176,25 @@
 
                 let row = doc.data();
 
-                if (row['name'] == '김지영') {
+                if (row['name'] === '김지영') {
                     let name = row.hobby;
                     let content = row.hobbycontent;
                     let image = row.hobbyimage;
 
                     let tHtml = `
-                    <div class="col">
-                        <div class="card">
-                            <img src="${image}"
-                                class="card-img-top" alt="...">
-                            <div id=card_content class="card-body">
-                                <h5 class="card-title">${name}</h5>
-                                <p class="card-text">${content}</p>
-                            </div>
-                        </div>
-                    </div>`;
+            <div class="col">
+                <div class="card">
+                    <img src="${image}"
+                        class="card-img-top" alt="...">
+                    <div id=card_content class="card-body">
+                        <h5 class="card-title">${name}</h5>
+                        <p class="card-text">${content}</p>
+                    </div>
+                </div>
+            </div>`;
+
                     $(".col-md-8").append(tHtml);
+                    isContentLoaded = true;
                 }
             });
 
