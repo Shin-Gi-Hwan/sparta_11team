@@ -114,6 +114,25 @@
             $('#postingbox').toggle();
         })
 
+        let docs = await getDocs(collection(db, "guestbook"));
+        docs.forEach((doc) => {
+            let row = doc.data();
+            let name = row['name'];
+            let comment = row['comment'];
+
+            let temp_html = `
+            <div class="col">
+                <div class="messages">
+                    <div class="card-body">
+                        <h5 class="card-title">${name}</h5>
+                        <p class="card-text">${comment}</p>
+                    </div>
+                </div>
+            </div>`;
+            $('#messages').append(temp_html);
+            
+        });
+
         $("#home").click(async function () {
             window.location.href = "file:///C:/Users/sng02/OneDrive/%EB%B0%94%ED%83%95%20%ED%99%94%EB%A9%B4/sparta/mini_proj/sparta_11team/main.html";
         })
@@ -128,7 +147,7 @@
 
         $("#hobby").click(async function () {
             $('#card').empty();
-            $('#category_btn').text("취미");
+            $('#category_btn').text("취미");            
             //DB에서 불러와서 넣기
         })
 
@@ -232,7 +251,7 @@
                 <button id="savebtn" type="submit">저장하기</button>
             </form>
             <ul class="messages" id="messages">
-                <!-- Messages will appear here -->
+          <!-- Messages will appear here -->
             </ul>
         </main>
     </div>
