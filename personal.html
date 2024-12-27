@@ -9,6 +9,18 @@
         integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <style>
+        @import url('https://fonts.googleapis.com/css2?family=Black+Han+Sans&family=Cute+Font&family=Gowun+Dodum&display=swap');
+    </style>
+    <style>
+        .profile,
+        .select,
+        .content {
+            font-family: "Gowun Dodum", serif;
+            font-weight: 400;
+            font-style: normal;
+        }
+
+
         .profile {
             display: flex;
         }
@@ -27,6 +39,11 @@
         .address>button {
             column-gap: 10px;
             width: 48.5%;
+
+            font-family: "Cute Font", serif;
+            font-weight: 400;
+            font-style: normal;
+            font-size: x-large;
         }
 
         .name_introduce {
@@ -68,10 +85,6 @@
             border: 1px solid grey;
             border-radius: 5px;
         }
-
-        .guest_book {
-            background-color: gray;
-        }
     </style>
     <script type="module">
         // Firebase SDK 라이브러리 가져오기
@@ -96,6 +109,10 @@
         const app = initializeApp(firebaseConfig);
         const db = getFirestore(app);
 
+        let urlParamFinder = new URLSearchParams(window.location.search);
+        let username = urlParamFinder.get('username');
+        console.log(username);
+
         $("#savebtn").click(async function () {
             let name = $('#gname').val();
             let comment = $('#comment').val();
@@ -109,9 +126,6 @@
             window.location.reload();
 
 
-        })
-        $("#savebtn").click(async function () {
-            $('#postingbox').toggle();
         })
 
         let docs = await getDocs(collection(db, "guestbook"));
@@ -145,36 +159,48 @@
             window.open("https://www.instagram.com/seonghyeo._.n/", "_blank");
         })
 
+        let isContentLoaded = false;
+
         $("#hobby").click(async function () {
+
+            if (isContentLoaded) {
+                console.log("콘텐츠가 이미 로드되었습니다.");
+                return; // 콘텐츠가 이미 추가된 경우 종료
+            }
+            $('#mycards').empty();
+            $('#category_btn').text("취미");
             //DB에서 불러와서 넣기
             const querySnapshot = await getDocs(collection(db, "personal"));
 
             querySnapshot.forEach((doc) => {
 
                 let row = doc.data();
-                let name = doc.data().hobby;
-                let content = doc.data().hobbycontent;
-                let image = doc.data().hobbyimage;
 
-                // 문서의 title, comment, image, star 필드에서 데이터를 추출한 변수명을 갖고,
-                // tempHtml 문자열에 각 데이터를 포함한 카드의 HTML 코드를 생성하세요.
-                let tHtml = `
-                <div class="col">
-                    <div class="card">
-                        <img src="${image}"
-                            class="card-img-top" alt="...">
-                        <div class="card-body">
-                            <h5 class="card-title">${name}</h5>
-                                <p class="card-text">${content}</p>
-                        </div>
-                     </div>
-                </div>`;
-                $(".col-md-8").append(tHtml);
+                if (row['name'] === '김지영') {
+                    let name = row.hobby;
+                    let content = row.hobbycontent;
+                    let image = row.hobbyimage;
+
+                    let tHtml = `
+            <div class="col">
+                <div class="card">
+                    <img src="${image}"
+                        class="card-img-top" alt="...">
+                    <div id=card_content class="card-body">
+                        <h5 class="card-title">${name}</h5>
+                        <p class="card-text">${content}</p>
+                    </div>
+                </div>
+            </div>`;
+
+                    $(".col-md-8").append(tHtml);
+                    isContentLoaded = true;
+                }
             });
 
         })
         $("#like").click(async function () {
-            $('#mycard').empty();
+            $('#mycards').remove();
             $('#category_btn').text("좋아하는 음식");
             //DB에서 불러와서 넣기
         })
@@ -222,7 +248,7 @@
                     <div class="col-md-4">
                         <img id="hobbyimage"
                             src="https://biz.chosun.com/resizer/v2/OZQ55ZCZHVA5TCMY5HNQXDNNFQ.jpg?auth=57550fc06014f31f72297e6002f5b1bdb7ef0ab2776c84d83ef223157f7104ee&width=616"
-                            class="img-fluid rounded-start" alt="...">
+                            class="img-fluid rounded-start" alt="..." style="max-width: 200px;">
                     </div>
                     <div class="col-md-8">
                         <div class="card-body">
