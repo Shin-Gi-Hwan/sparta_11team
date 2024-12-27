@@ -12,7 +12,9 @@
         @import url('https://fonts.googleapis.com/css2?family=Black+Han+Sans&family=Cute+Font&family=Gowun+Dodum&display=swap');
     </style>
     <style>
-        .profile, .select, .content {
+        .profile,
+        .select,
+        .content {
             font-family: "Gowun Dodum", serif;
             font-weight: 400;
             font-style: normal;
@@ -107,6 +109,10 @@
         const app = initializeApp(firebaseConfig);
         const db = getFirestore(app);
 
+        let urlParamFinder = new URLSearchParams(window.location.search);
+        let username = urlParamFinder.get('username');
+        console.log(username);
+
         $("#savebtn").click(async function () {
             let name = $('#gname').val();
             let comment = $('#comment').val();
@@ -141,7 +147,7 @@
                 </div>
             </div>`;
             $('#messages').append(temp_html);
-            
+
         });
 
         $("#home").click(async function () {
@@ -158,7 +164,7 @@
 
         $("#hobby").click(async function () {
             $('#card').empty();
-            $('#category_btn').text("취미");            
+            $('#category_btn').text("취미");
             //DB에서 불러와서 넣기
         })
 
@@ -262,7 +268,7 @@
                 <button id="savebtn" type="submit">저장하기</button>
             </form>
             <ul class="messages" id="messages">
-          <!-- Messages will appear here -->
+                <!-- Messages will appear here -->
             </ul>
         </main>
     </div>
