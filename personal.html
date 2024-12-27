@@ -117,9 +117,8 @@
         let docs = await getDocs(collection(db, "guestbook"));
         docs.forEach((doc) => {
             let row = doc.data();
-            let image = row['name'];
-            let title = row['comment'];
-
+            let name = row['name'];
+            let comment = row['comment'];
 
             let temp_html = `
             <div class="col">
@@ -148,7 +147,7 @@
 
         $("#hobby").click(async function () {
             $('#card').empty();
-            $('#category_btn').text("취미");
+            $('#category_btn').text("취미");            
             //DB에서 불러와서 넣기
         })
 
