@@ -146,10 +146,39 @@
         })
 
         $("#hobby").click(async function () {
-                $('#card').empty();
-                $('#category_btn').text("취미");
-                //DB에서 불러와서 넣기
-            })
+            $('#card').empty();
+            $('#category_btn').text("취미");
+            //DB에서 불러와서 넣기
+            const querySnapshot = await getDocs(collection(db, "personal"));
+
+            querySnapshot.forEach((doc) => {
+
+                let row = doc.data();
+                let name = doc.data().hobby;
+                let content = doc.data().hobbycontent;
+                let image = doc.data().hobbyimage;
+
+                console.log(name)
+                console.log(content)
+                console.log(image)
+
+                // 문서의 title, comment, image, star 필드에서 데이터를 추출한 변수명을 갖고,
+                // tempHtml 문자열에 각 데이터를 포함한 카드의 HTML 코드를 생성하세요.
+                let tHtml = `
+                <div class="col">
+                    <div class="card">
+                        <img src="${hobbyimage}"
+                            class="card-img-top" alt="...">
+                        <div class="card-body">
+                            <h5 class="card-title">${hobby}</h5>
+                                <p class="card-text">${hobbycontent}</p>
+                        </div>
+                     </div>
+                </div>`;
+                $(".col-md-8").append(tHtml);
+            });
+
+        })
         $("#like").click(async function () {
             $('#mycard').empty();
             $('#category_btn').text("좋아하는 음식");
@@ -196,17 +225,19 @@
         <div class="mycards">
             <div class="card mb-3" style="max-width: 540px;">
                 <div class="row g-0">
-                  <div class="col-md-4">
-                    <img id="hobbyimage" src="https://biz.chosun.com/resizer/v2/OZQ55ZCZHVA5TCMY5HNQXDNNFQ.jpg?auth=57550fc06014f31f72297e6002f5b1bdb7ef0ab2776c84d83ef223157f7104ee&width=616" class="img-fluid rounded-start" alt="...">
-                  </div>
-                  <div class="col-md-8">
-                    <div class="card-body">
-                      <h5 id="hobbyname" class="card-title">취미이름</h5>
-                      <p id="hobbycontent" class="card-text">취미내용.</p>
+                    <div class="col-md-4">
+                        <img id="hobbyimage"
+                            src="https://biz.chosun.com/resizer/v2/OZQ55ZCZHVA5TCMY5HNQXDNNFQ.jpg?auth=57550fc06014f31f72297e6002f5b1bdb7ef0ab2776c84d83ef223157f7104ee&width=616"
+                            class="img-fluid rounded-start" alt="...">
                     </div>
-                  </div>
+                    <div class="col-md-8">
+                        <div class="card-body">
+                            <h5 id="hobbyname" class="card-title">취미이름</h5>
+                            <p id="hobbycontent" class="card-text">취미내용.</p>
+                        </div>
+                    </div>
                 </div>
-              </div>
+            </div>
         </div>
     </div>
 
