@@ -146,6 +146,8 @@
         })
 
         $("#hobby").click(async function () {
+            $('#card').empty();
+            $('#category_btn').text("취미");
             //DB에서 불러와서 넣기
             const querySnapshot = await getDocs(collection(db, "personal"));
 
@@ -162,14 +164,15 @@
 
                 // 문서의 title, comment, image, star 필드에서 데이터를 추출한 변수명을 갖고,
                 // tempHtml 문자열에 각 데이터를 포함한 카드의 HTML 코드를 생성하세요.
+
                 let tHtml = `
                 <div class="col">
                     <div class="card">
-                        <img src="${image}"
+                        <img src="${hobbyimage}"
                             class="card-img-top" alt="...">
                         <div class="card-body">
-                            <h5 class="card-title">${name}</h5>
-                                <p class="card-text">${content}</p>
+                            <h5 class="card-title">${hobby}</h5>
+                                <p class="card-text">${hobbycontent}</p>
                         </div>
                      </div>
                 </div>`;
