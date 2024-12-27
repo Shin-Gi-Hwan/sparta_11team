@@ -165,11 +165,40 @@
         $("#hobby").click(async function () {
             $('#card').empty();
             $('#category_btn').text("취미");
-            //DB에서 불러와서 넣기
-        })
 
+            //DB에서 불러와서 넣기
+            const querySnapshot = await getDocs(collection(db, "personal"));
+
+            querySnapshot.forEach((doc) => {
+
+                let row = doc.data();
+                let name = doc.data().hobby;
+                let content = doc.data().hobbycontent;
+                let image = doc.data().hobbyimage;
+
+                console.log(name)
+                console.log(content)
+                console.log(image)
+
+                // 문서의 title, comment, image, star 필드에서 데이터를 추출한 변수명을 갖고,
+                // tempHtml 문자열에 각 데이터를 포함한 카드의 HTML 코드를 생성하세요.
+                let tHtml = `
+                <div class="col">
+                    <div class="card">
+                        <img src="${image}"
+                            class="card-img-top" alt="...">
+                        <div class="card-body">
+                            <h5 class="card-title">${name}</h5>
+                                <p class="card-text">${content}</p>
+                        </div>
+                     </div>
+                </div>`;
+                $(".col-md-8").append(tHtml);
+            });
+
+        })
         $("#like").click(async function () {
-            $('#card').empty();
+            $('#mycard').empty();
             $('#category_btn').text("좋아하는 음식");
             //DB에서 불러와서 넣기
         })
@@ -212,44 +241,17 @@
     <div class="content">
         <button id="category_btn" type="button" class="btn btn-light"><span>취미</span></button>
         <div class="mycards">
-            <div id="card" class="row row-cols-1 row-cols-md-4 g-4">
-                <div class="col">
-                    <div class="card h-100">
-                        <img src="https://movie-phinf.pstatic.net/20210728_221/1627440327667GyoYj_JPEG/movie_image.jpg"
-                            class="card-img-top" alt="..." style="height:200px;">
-                        <div class="card-body">
-                            <h5 class="card-title">소재</h5>
-                            <p class="card-text">내용</p>
-                        </div>
+            <div class="card mb-3" style="max-width: 540px;">
+                <div class="row g-0">
+                    <div class="col-md-4">
+                        <img id="hobbyimage"
+                            src="https://biz.chosun.com/resizer/v2/OZQ55ZCZHVA5TCMY5HNQXDNNFQ.jpg?auth=57550fc06014f31f72297e6002f5b1bdb7ef0ab2776c84d83ef223157f7104ee&width=616"
+                            class="img-fluid rounded-start" alt="...">
                     </div>
-                </div>
-                <div class="col">
-                    <div class="card h-100">
-                        <img src="https://movie-phinf.pstatic.net/20210728_221/1627440327667GyoYj_JPEG/movie_image.jpg"
-                            class="card-img-top" alt="..." style="height:200px;">
+                    <div class="col-md-8">
                         <div class="card-body">
-                            <h5 class="card-title">소재</h5>
-                            <p class="card-text">내용</p>
-                        </div>
-                    </div>
-                </div>
-                <div class="col">
-                    <div class="card h-100">
-                        <img src="https://movie-phinf.pstatic.net/20210728_221/1627440327667GyoYj_JPEG/movie_image.jpg"
-                            class="card-img-top" alt="..." style="height:200px;">
-                        <div class="card-body">
-                            <h5 class="card-title">소재</h5>
-                            <p class="card-text">내용</p>
-                        </div>
-                    </div>
-                </div>
-                <div class="col">
-                    <div class="card h-100">
-                        <img src="https://movie-phinf.pstatic.net/20210728_221/1627440327667GyoYj_JPEG/movie_image.jpg"
-                            class="card-img-top" alt="..." style="height:200px;">
-                        <div class="card-body">
-                            <h5 class="card-title">소재</h5>
-                            <p class="card-text">내용</p>
+                            <h5 id="hobbyname" class="card-title">취미이름</h5>
+                            <p id="hobbycontent" class="card-text">취미내용.</p>
                         </div>
                     </div>
                 </div>
