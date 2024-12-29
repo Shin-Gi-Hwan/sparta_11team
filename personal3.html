@@ -191,6 +191,7 @@
             window.open("https://www.instagram.com/gihwan777/", "_blank");
         })
 
+        $('.mycards').empty();
         let isContentLoaded = false;
 
         let currentCategory = "hobby";
@@ -202,13 +203,13 @@
 
         $("#hobby").click(async function () {
             if (currentCategory === "hobby") {
-                $('.col-md-8').empty();
+                $('.mycards').empty();
                 currentCategory = "";
                 return;
             }
 
             console.log("취미 콘텐츠를 로드합니다.");
-            $('.col-md-8').empty();
+            $('.mycards').empty();
             $('#category_btn').text("취미");
             currentCategory = "hobby";
             await loadHobbyContent();
@@ -217,13 +218,13 @@
         $("#like").click(async function () {
             if (currentCategory === "like") {
 
-                $('.col-md-8').empty();
+                $('.mycards').empty();
                 currentCategory = "";
                 return;
             }
 
             console.log("좋아하는 음식 콘텐츠를 로드합니다.");
-            $('.col-md-8').empty();
+            $('.mycards').empty();
             $('#category_btn').text("좋아하는 음식");
             currentCategory = "like";
             await loadLikeContent();
@@ -242,18 +243,21 @@
                     let image = row.hobbyimage;
 
                     let tHtml = `
-            <div class="col">
-                <div class="card">
-                    <img src="${image}"
-                        class="card-img-top" alt="...">
-                    <div id="card_content" class="card-body">
-                        <h5 class="card-title">${name}</h5>
-                        <p class="card-text">${content}</p>
+                <div class="row g-0">
+                    <div class="col-md-4">
+                        <img id="hobbyimage"
+                            src="${image}"
+                            class="img-fluid rounded-start" alt="..." style="width: 200; height: 293px;">
                     </div>
-                </div>
-            </div>`;
+                    <div class="col-md-8">
+                        <div class="card-body">
+                            <h5 id="hobbyname" class="card-title" style="color: white">${name}</h5>
+                            <p id="hobbycontent" class="card-text" style="color: white">${content}</p>
+                        </div>
+                    </div>
+                </div>`;
 
-                    $(".col-md-8").append(tHtml);
+                    $(".mycards").append(tHtml);
                 }
             });
         }
@@ -267,22 +271,25 @@
 
                 if (row['name'] === '김지영') {
                     let name = row.like;
-                    let content = row.likecontent;
-                    let image = row.likeimage;
+                    let content = row.likecomment;
+                    let image = row.likeimg;
 
                     let tHtml = `
-            <div class="col">
-                <div class="card">
-                    <img src="${image}"
-                        class="card-img-top" alt="...">
-                    <div id="card_content" class="card-body">
-                        <h5 class="card-title">${name}</h5>
-                        <p class="card-text">${content}</p>
+                <div class="row g-0">
+                    <div class="col-md-4">
+                        <img id="hobbyimage"
+                            src="${image}"
+                            class="img-fluid rounded-start" alt="..." style="width: 200; height: 293px;">
                     </div>
-                </div>
-            </div>`;
+                    <div class="col-md-8">
+                        <div class="card-body">
+                            <h5 id="hobbyname" class="card-title" style="color: white">${name}</h5>
+                            <p id="hobbycontent" class="card-text" style="color: white">${content}</p>
+                        </div>
+                    </div>
+                </div>`;
 
-                    $(".col-md-8").append(tHtml);
+                    $(".mycards").append(tHtml);
                 }
             });
         }
