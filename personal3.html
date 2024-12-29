@@ -205,20 +205,22 @@
 
         let isContentLoaded = false; // 콘텐츠 로드 상태를 추적
 
+        let currentCategory = ""; // 현재 로드된 카테고리
+
         $("#hobby").click(async function () {
-            if (isContentLoaded) {
-                // 콘텐츠가 이미 로드된 경우 제거
-                $('.col-md-8').empty(); // 카드 콘텐츠 제거
-                isContentLoaded = false; // 로드 상태 초기화
-                console.log("콘텐츠가 제거되었습니다.");
+            if (currentCategory === "hobby") {
+                $('.col-md-8').empty();
+                currentCategory = ""; // 카테고리 초기화
+                console.log("취미 콘텐츠가 제거되었습니다.");
                 return;
             }
 
-            console.log("콘텐츠를 로드합니다.");
-            $('#mycards').empty();
+            console.log("취미 콘텐츠를 로드합니다.");
+            $('.col-md-8').empty(); // 기존 콘텐츠 제거
             $('#category_btn').text("취미");
+            currentCategory = "hobby"; // 현재 카테고리 설정
 
-            // DB에서 불러오기
+            // DB에서 취미 데이터를 로드
             const querySnapshot = await getDocs(collection(db, "personal"));
 
             querySnapshot.forEach((doc) => {
@@ -242,25 +244,51 @@
             </div>`;
 
                     $(".col-md-8").append(tHtml);
-                    isContentLoaded = true; // 로드 상태 갱신
                 }
             });
         });
 
         $("#like").click(async function () {
-            if (isContentLoaded) {
-                // 콘텐츠가 이미 로드된 경우 제거
-                $('.col-md-8').empty(); // 카드 콘텐츠 제거
-                isContentLoaded = false; // 로드 상태 초기화
-                console.log("콘텐츠가 제거되었습니다.");
+            if (currentCategory === "like") {
+                $('.col-md-8').empty();
+                currentCategory = ""; // 카테고리 초기화
+                console.log("좋아하는 음식 콘텐츠가 제거되었습니다.");
                 return;
             }
 
             console.log("좋아하는 음식 콘텐츠를 로드합니다.");
-            $('#mycards').empty();
+            $('.col-md-8').empty(); // 기존 콘텐츠 제거
             $('#category_btn').text("좋아하는 음식");
+            currentCategory = "like"; // 현재 카테고리 설정
 
+            // DB에서 좋아하는 음식 데이터를 로드
+            const querySnapshot = await getDocs(collection(db, "personal"));
+
+            querySnapshot.forEach((doc) => {
+                let row = doc.data();
+
+                if (row['name'] === '김지영') {
+                    let name = row.like;
+                    let content = row.likecontent;
+                    let image = row.likeimage;
+
+                    let tHtml = `
+            <div class="col">
+                <div class="card">
+                    <img src="${image}"
+                        class="card-img-top" alt="...">
+                    <div id="card_content" class="card-body">
+                        <h5 class="card-title">${name}</h5>
+                        <p class="card-text">${content}</p>
+                    </div>
+                </div>
+            </div>`;
+
+                    $(".col-md-8").append(tHtml);
+                }
+            });
         });
+
 
     </script>
 </head>
