@@ -178,21 +178,25 @@
             window.open("https://www.instagram.com/seonghyeo._.n/", "_blank");
         })
 
-        let isContentLoaded = false;
+        let isContentLoaded = false; // 콘텐츠 로드 상태를 추적
 
         $("#hobby").click(async function () {
-
             if (isContentLoaded) {
-                console.log("콘텐츠가 이미 로드되었습니다.");
-                return; // 콘텐츠가 이미 추가된 경우 종료
+                // 콘텐츠가 이미 로드된 경우 제거
+                $('.mycards').empty(); // 카드 콘텐츠 제거
+                isContentLoaded = false; // 로드 상태 초기화
+                console.log("콘텐츠가 제거되었습니다.");
+                return;
             }
-            $('#mycards').empty();
+
+            console.log("콘텐츠를 로드합니다.");
+            $('.mycards').empty();
             $('#category_btn').text("취미");
-            //DB에서 불러와서 넣기
+
+            // DB에서 불러오기
             const querySnapshot = await getDocs(collection(db, "personal"));
 
             querySnapshot.forEach((doc) => {
-
                 let row = doc.data();
 
                 if (row['name'] === '김지영') {
@@ -201,28 +205,74 @@
                     let image = row.hobbyimage;
 
                     let tHtml = `
-            <div class="col">
-                <div class="card">
-                    <img src="${image}"
-                        class="card-img-top" alt="...">
-                    <div id=card_content class="card-body">
-                        <h5 class="card-title">${name}</h5>
-                        <p class="card-text">${content}</p>
+                <div class="row g-0">
+                    <div class="col-md-4">
+                        <img id="hobbyimage"
+                            src="${image}"
+                            class="img-fluid rounded-start" alt="..." style="width: 200; height: 295px;">
                     </div>
-                </div>
-            </div>`;
+                    <div class="col-md-8">
+                        <div class="card-body">
+                            <h5 id="hobbyname" class="card-title" style="color: white">${name}</h5>
+                            <p id="hobbycontent" class="card-text" style="color: white">${content}</p>
+                        </div>
+                    </div>
+                </div>`;
 
-                    $(".col-md-8").append(tHtml);
-                    isContentLoaded = true;
+                    $(".mycards").append(tHtml);
+                    isContentLoaded = true; // 로드 상태 갱신
                 }
             });
+        });
 
-        })
         $("#like").click(async function () {
-            $('#mycards').remove();
+            if (isContentLoaded) {
+                // 콘텐츠가 이미 로드된 경우 제거
+                $('.mycards').empty(); // 카드 콘텐츠 제거
+                isContentLoaded = false; // 로드 상태 초기화
+                console.log("콘텐츠가 제거되었습니다.");
+                return;
+            }
+
+            console.log("콘텐츠를 로드합니다.");
+            $('.mycards').empty();
             $('#category_btn').text("좋아하는 음식");
-            //DB에서 불러와서 넣기
-        })
+
+            // DB에서 불러오기
+            const querySnapshot = await getDocs(collection(db, "personal"));
+
+            querySnapshot.forEach((doc) => {
+                let row = doc.data();
+
+                if (row['name'] === '김지영') {
+                    let name = row.like;
+                    let content = row.likecomment;
+                    let image = row.likeimg;
+
+                    console.log(name);
+                    console.log(content);
+                    console.log(image);
+
+                    let tHtml = `
+                <div class="row g-0">
+                    <div class="col-md-4">
+                        <img id="hobbyimage"
+                            src="${image}"
+                            class="img-fluid rounded-start" alt="..." style="width: 200; height: 295px;">
+                    </div>
+                    <div class="col-md-8">
+                        <div class="card-body">
+                            <h5 id="hobbyname" class="card-title" style="color: white">${name}</h5>
+                            <p id="hobbycontent" class="card-text" style="color: white">${content}</p>
+                        </div>
+                    </div>
+                </div>`;
+
+                    $(".mycards").append(tHtml);
+                    isContentLoaded = true; // 로드 상태 갱신
+                }
+            });
+        });
 
     </script>
 </head>
@@ -265,17 +315,17 @@
         <button id="category_btn" type="button" class="btn btn-light"
             style="font-family: Gowun Dodum, serif;"><span>취미</span></button>
         <div class="mycards">
-            <div class="card mb-3" style="max-width: 540px;">
+            <div class="card mb-3" style="max-width: 1000px;">
                 <div class="row g-0">
                     <div class="col-md-4">
                         <img id="hobbyimage"
-                            src="https://biz.chosun.com/resizer/v2/OZQ55ZCZHVA5TCMY5HNQXDNNFQ.jpg?auth=57550fc06014f31f72297e6002f5b1bdb7ef0ab2776c84d83ef223157f7104ee&width=616"
-                            class="img-fluid rounded-start" alt="..." style="max-width: 200px;">
+                            src="https://search.pstatic.net/sunny/?src=https%3A%2F%2Fyt3.googleusercontent.com%2F5d1OSu6a_n351Foyu9MgO1WE0PhTI1vPHBL0myZ5RhZXrEflBTSHHl3Zxe9NwK27uYY22Znknz8%3Ds900-c-k-c0x00ffffff-no-rj&type=a340"
+                            class="img-fluid rounded-start" alt="..." style="width: 200; height: 295px;">
                     </div>
                     <div class="col-md-8">
                         <div class="card-body">
-                            <h5 id="hobbyname" class="card-title">취미이름</h5>
-                            <p id="hobbycontent" class="card-text">취미내용.</p>
+                            <h5 id="hobbyname" class="card-title" style="color: white">게임</h5>
+                            <p id="hobbycontent" class="card-text" style="color: white">롤, tft, 메이플m을 좋아합니다.</p>
                         </div>
                     </div>
                 </div>
