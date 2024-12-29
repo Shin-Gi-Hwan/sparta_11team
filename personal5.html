@@ -117,13 +117,17 @@
             border: 1px solid grey;
             border-radius: 5px;
         }
+        .timestamp {
+            color: gray;
+            font-size: small;
+        }
     </style>
     <script type="module">
         // Firebase SDK 라이브러리 가져오기
         import { initializeApp } from "https://www.gstatic.com/firebasejs/9.22.0/firebase-app.js";
         import { getFirestore } from "https://www.gstatic.com/firebasejs/9.22.0/firebase-firestore.js";
         import { collection, addDoc } from "https://www.gstatic.com/firebasejs/9.22.0/firebase-firestore.js";
-        import { getDocs } from "https://www.gstatic.com/firebasejs/9.22.0/firebase-firestore.js";
+        import { getDocs, query, orderBy } from "https://www.gstatic.com/firebasejs/9.22.0/firebase-firestore.js";
 
         // Firebase 구성 정보 설정
         // For Firebase JS SDK v7.20.0 and later, measurementId is optional
@@ -148,23 +152,34 @@
         $("#savebtn").click(async function () {
             let name = $('#gname').val();
             let comment = $('#comment').val();
+            let timestamp = $('#timestamp').val();
 
             let doc = {
                 'name': name,
-                'comment': comment
+                'comment': comment,
+                'timestamp': new Date()
             };
-            await addDoc(collection(db, "guestbook"), doc);
+            await addDoc(collection(db, "guestbook5"), doc);
             alert('저장 완료!')
             window.location.reload();
 
 
         })
+        let q = query(collection(db, "guestbook5"), orderBy("timestamp", "desc"));
+        let docs = await getDocs(q);
 
-        let docs = await getDocs(collection(db, "guestbook"));
         docs.forEach((doc) => {
             let row = doc.data();
             let name = row['name'];
             let comment = row['comment'];
+            let timestamp = row['timestamp'];
+
+            let formattedTimestamp = "";
+            if (timestamp) {
+                const date = timestamp.toDate();
+                formattedTimestamp = `${date.getFullYear()}-${String(date.getMonth() + 1).padStart(2, "0")}-${String(date.getDate()).padStart(2, "0")} 
+            ${String(date.getHours()).padStart(2, "0")}:${String(date.getMinutes()).padStart(2, "0")}:${String(date.getSeconds()).padStart(2, "0")}`;
+            }
 
             let temp_html = `
             <div class="col">
@@ -172,6 +187,7 @@
                     <div class="card-body">
                         <h5 class="card-title">${name}</h5>
                         <p class="card-text">${comment}</p>
+                        <p class="card-text timestamp">${formattedTimestamp}</p>
                     </div>
                 </div>
             </div>`;
@@ -184,59 +200,110 @@
         // })
 
         $("#addressbtn_git").click(async function () {
-            window.open("https://github.com/sng02006", "_blank");
+            window.open("https://github.com/", "_blank");
         })
 
         $("#addressbtn_insta").click(async function () {
-            window.open("https://www.instagram.com/seonghyeo._.n/", "_blank");
+            window.open("https://www.instagram.com/", "_blank");
         })
 
+
+        $('.mycards').empty();
         let isContentLoaded = false;
 
-        $("#hobby").click(async function () {
+        let currentCategory = "hobby";
 
-            if (isContentLoaded) {
-                console.log("콘텐츠가 이미 로드되었습니다.");
-                return; // 콘텐츠가 이미 추가된 경우 종료
-            }
-            $('#mycards').empty();
+        $(document).ready(async function () {
             $('#category_btn').text("취미");
-            //DB에서 불러와서 넣기
-            const querySnapshot = await getDocs(collection(db, "personal"));
+            await loadHobbyContent();
+        });
+
+        $("#hobby").click(async function () {
+            if (currentCategory === "hobby") {
+                $('.mycards').empty();
+                currentCategory = "";
+                return;
+            }
+
+            console.log("취미 콘텐츠를 로드합니다.");
+            $('.mycards').empty();
+            $('#category_btn').text("취미");
+            currentCategory = "hobby";
+            await loadHobbyContent();
+        });
+
+        $("#like").click(async function () {
+            if (currentCategory === "like") {
+
+                $('.mycards').empty();
+                currentCategory = "";
+                return;
+            }
+
+            console.log("좋아하는 음식 콘텐츠를 로드합니다.");
+            $('.mycards').empty();
+            $('#category_btn').text("좋아하는 음식");
+            currentCategory = "like";
+            await loadLikeContent();
+        });
+
+        // 취미 콘텐츠 로드 함수
+        async function loadHobbyContent() {
+            const querySnapshot = await getDocs(collection(db, "personal5_hobby"));
 
             querySnapshot.forEach((doc) => {
-
                 let row = doc.data();
-
-                if (row['name'] === '김지영') {
                     let name = row.hobby;
-                    let content = row.hobbycontent;
-                    let image = row.hobbyimage;
+                    let content = row.comment;
+                    let image = row.himg;
 
                     let tHtml = `
-            <div class="col">
-                <div class="card">
-                    <img src="${image}"
-                        class="card-img-top" alt="...">
-                    <div id=card_content class="card-body">
-                        <h5 class="card-title">${name}</h5>
-                        <p class="card-text">${content}</p>
+                <div class="row g-0">
+                    <div class="col-md-4">
+                        <img id="hobbyimage"
+                            src="${image}"
+                            class="img-fluid rounded-start" alt="..." style="width: 200; height: 293px;">
                     </div>
-                </div>
-            </div>`;
+                    <div class="col-md-8">
+                        <div class="card-body">
+                            <h5 id="hobbyname" class="card-title" style="color: white">${name}</h5>
+                            <p id="hobbycontent" class="card-text" style="color: white">${content}</p>
+                        </div>
+                    </div>
+                </div>`;
 
-                    $(".col-md-8").append(tHtml);
-                    isContentLoaded = true;
-                }
+                    $(".mycards").append(tHtml);
             });
+        }
 
-        })
-        $("#like").click(async function () {
-            $('#mycards').remove();
-            $('#category_btn').text("좋아하는 음식");
-            //DB에서 불러와서 넣기
-        })
+        // 좋아하는 음식 콘텐츠 로드 함수
+        async function loadLikeContent() {
+            const querySnapshot = await getDocs(collection(db, "personal5_like"));
 
+            querySnapshot.forEach((doc) => {
+                let row = doc.data();
+                    let name = row.food;
+                    let content = row.comment;
+                    let image = row.foodimg;
+
+                    let tHtml = `
+                <div class="row g-0">
+                    <div class="col-md-4">
+                        <img id="hobbyimage"
+                            src="${image}"
+                            class="img-fluid rounded-start" alt="..." style="width: 200; height: 293px;">
+                    </div>
+                    <div class="col-md-8">
+                        <div class="card-body">
+                            <h5 id="hobbyname" class="card-title" style="color: white">${name}</h5>
+                            <p id="hobbycontent" class="card-text" style="color: white">${content}</p>
+                        </div>
+                    </div>
+                </div>`;
+
+                    $(".mycards").append(tHtml);
+            });
+        }
     </script>
 </head>
 
@@ -259,10 +326,10 @@
         <div>
             <div class="name_introduce">
                 <div class="text" style="font-weight: bold; text-align: center;">
-                    <p><span>서지원 [ISFP]</span></p>
+                    <p><span>오명제 [ISFP]</span></p>
                 </div>
                 <div class="text" style="padding: 15px;">
-                    <p><span>자기소개 내용 적기 </span></p>
+                    <p><span>안녕하세요! 반갑습니다. </span></p>
                 </div>
             </div>
         </div>
@@ -272,6 +339,7 @@
         <!-- 버튼 내 글씨체 변경 -->
         <button id="hobby" type="button" class="btn btn-light" style="font-family: Gowun Dodum, serif;">취미</button>
         <button id="like" type="button" class="btn btn-light" style="font-family: Gowun Dodum, serif;">좋아하는 음식</button>
+        <button id="toggle-guestbook-btn" type="button" class="btn btn-light" style="font-family: Gowun Dodum, serif;">방명록작성</button>
     </div>
 
     <div class="content">
@@ -297,9 +365,9 @@
     </div>
 
     <body>
-        <div style="display: flex; justify-content: center; margin: 70px auto 0px auto; ">
+        <!-- <div style="display: flex; justify-content: center; margin: 70px auto 0px auto; ">
             <button class = "btn btn-light" id="toggle-guestbook-btn" type="button" style="font-size: 20px;" >방명록 작성</button>
-        </div>
+        </div> -->
         
     
         <div class="guest_book" id="guest-book" style="display: none;">
