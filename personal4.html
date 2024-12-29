@@ -12,8 +12,7 @@
         @import url('https://fonts.googleapis.com/css2?family=Black+Han+Sans&family=Gowun+Dodum&family=Jua&family=Kanit:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&family=Lilita+One&family=Londrina+Shadow&family=Moirai+One&family=Rubik+Dirt&family=Rubik+Vinyl&family=Sacramento&family=Tilt+Neon&display=swap');
     </style>
     <style>
-        .profile,
-        .select,
+        .profile .select,
         .content {
             font-family: "Gowun Dodum", serif;
             font-weight: 400;
@@ -32,19 +31,22 @@
 
         }
 
+        /* 중심으로 오도록 수정함 */
         .profile {
             display: flex;
+            justify-content: center;
         }
 
+        /* 이미지 크기 조정 */
         .personal_picture {
-            margin: 50px 0 0 100px;
-            width: 200px;
+            margin: 50px 30px;
+            width: 240px;
         }
 
         .address {
             padding: 14px;
             height: 70px;
-            width: 200px;
+            width: 270px;
             display: flex;
             column-gap: 15px;
             justify-content: center;
@@ -62,9 +64,10 @@
         }
 
         .name_introduce {
+            
             margin: 50px 0 0 30px;
             height: 250px;
-            width: 300px;
+            width: 320px;
 
             background-color: white;
             border: 1px solid grey;
@@ -76,6 +79,7 @@
             font-family: "Gowun Dodum", serif;
             font-weight: 400;
             font-style: normal;
+            
         }
 
         .select {
@@ -237,19 +241,19 @@
         <div class="personal_picture">
             <image
                 src="https://images.unsplash.com/photo-1446768500601-ac47e5ec3719?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1446&q=80"
-                style="width:200px; height:200px;"></image>
+                style="width: 270px; height: 200px; border-radius: 8px;"></image>
             <div class="address">
                 <button id="addressbtn_git" type="button" class="btn btn-light">Github</button>
                 <button id="addressbtn_insta" type="button" class="btn btn-light">Instagram</button>
             </div>
         </div>
         <div>
-            <div class="name_introduce">
-                <div class="text">
-                    <p><span>박성현</span></p>
+            <div class="name_introduce" >
+                <div class="text" style="font-weight: bold; text-align: center;">
+                    <p><span>서지원 [ISFP]</span></p>
                 </div>
-                <div class="text">
-                    <p><span>ISTJ</span></p>
+                <div class="text" style="padding: 15px;">
+                    <p><span>자기소개 내용 적기 </span></p>
                 </div>
             </div>
         </div>
@@ -342,7 +346,7 @@
     </script>
     <style>
         body {
-            
+
             margin: 0;
             padding: 0;
             background-color: rgb(0, 0, 0);
@@ -357,7 +361,7 @@
             text-align: center;
         }
 
-        
+
         main {
 
             font-family: "Gowun Dodum", serif;
