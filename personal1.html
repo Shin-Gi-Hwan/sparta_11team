@@ -9,58 +9,90 @@
         integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <style>
-        @import url('https://fonts.googleapis.com/css2?family=Black+Han+Sans&family=Cute+Font&family=Gowun+Dodum&display=swap');
+        @import url('https://fonts.googleapis.com/css2?family=Black+Han+Sans&family=Gowun+Dodum&family=Jua&family=Kanit:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&family=Lilita+One&family=Londrina+Shadow&family=Moirai+One&family=Rubik+Dirt&family=Rubik+Vinyl&family=Sacramento&family=Tilt+Neon&display=swap');
     </style>
     <style>
-        .profile,
-        .select,
+        .profile .select,
         .content {
             font-family: "Gowun Dodum", serif;
             font-weight: 400;
             font-style: normal;
         }
 
+        /* 메인 페이지로 이동하는 버튼 글씨체 변경*/
+        .homebtn {
 
-        .profile {
-            display: flex;
+            font-family: "Tilt Neon", serif;
+            font-optical-sizing: auto;
+            font-weight: 500;
+            font-style: normal;
+            font-size: 20px;
+            border-radius: 5px;
+
         }
 
+        /* 중심으로 오도록 수정함 */
+        .profile {
+            display: flex;
+            justify-content: center;
+
+            /* shadow 적용 부분분 */
+            background-color: #000000;
+            box-shadow: 0px 0px 20px 8px #242323;
+
+            /* 양 끝 테두리 */
+            margin-left: 5px;
+            margin-right: 10px;
+        }
+
+        /* 이미지 크기 조정 */
         .personal_picture {
-            margin: 50px 0 0 100px;
-            width: 200px;
+            margin: 50px 30px;
+            width: 240px;
         }
 
         .address {
-            padding-top: 5px;
-            height: 50px;
-            width: 200px;
+            padding: 14px;
+            height: 70px;
+            width: 270px;
+            display: flex;
+            column-gap: 15px;
+            justify-content: center;
+            flex-wrap: nowrap;
         }
 
         .address>button {
             column-gap: 10px;
-            width: 48.5%;
 
-            font-family: "Cute Font", serif;
-            font-weight: 400;
+            font-family: "Tilt Neon", serif;
+            font-optical-sizing: auto;
+            font-weight: 500;
             font-style: normal;
-            font-size: x-large;
+            font-size: 15px;
         }
 
         .name_introduce {
+
             margin: 50px 0 0 30px;
             height: 250px;
-            width: 300px;
+            width: 320px;
 
+            background-color: white;
             border: 1px solid grey;
             border-radius: 5px;
         }
 
         .text {
             margin: 10px auto 0 10px;
+            font-family: "Gowun Dodum", serif;
+            font-weight: 400;
+            font-style: normal;
+
         }
 
         .select {
             text-align: center;
+            margin-top: 30px;
         }
 
         .content {
@@ -85,18 +117,13 @@
             border: 1px solid grey;
             border-radius: 5px;
         }
-
-        .timestamp {
-            color: gray;
-            font-size: small;
-        }
     </style>
     <script type="module">
         // Firebase SDK 라이브러리 가져오기
         import { initializeApp } from "https://www.gstatic.com/firebasejs/9.22.0/firebase-app.js";
         import { getFirestore } from "https://www.gstatic.com/firebasejs/9.22.0/firebase-firestore.js";
         import { collection, addDoc } from "https://www.gstatic.com/firebasejs/9.22.0/firebase-firestore.js";
-        import { getDocs, query, orderBy } from "https://www.gstatic.com/firebasejs/9.22.0/firebase-firestore.js";
+        import { getDocs } from "https://www.gstatic.com/firebasejs/9.22.0/firebase-firestore.js";
 
         // Firebase 구성 정보 설정
         // For Firebase JS SDK v7.20.0 and later, measurementId is optional
@@ -121,12 +148,10 @@
         $("#savebtn").click(async function () {
             let name = $('#gname').val();
             let comment = $('#comment').val();
-            let timestamp = $('#timestamp').val();
 
             let doc = {
                 'name': name,
-                'comment': comment,
-                'timestamp': new Date()
+                'comment': comment
             };
             await addDoc(collection(db, "guestbook"), doc);
             alert('저장 완료!')
@@ -135,22 +160,11 @@
 
         })
 
-        // "timestamp"는 정렬에 사용
-        let q = query(collection(db, "guestbook"), orderBy("timestamp", "desc"));
-        let docs = await getDocs(q);
-
+        let docs = await getDocs(collection(db, "guestbook"));
         docs.forEach((doc) => {
             let row = doc.data();
             let name = row['name'];
             let comment = row['comment'];
-            let timestamp = row['timestamp']
-
-            let formattedTimestamp = "";
-            if (timestamp) {
-                const date = timestamp.toDate();
-                formattedTimestamp = `${date.getFullYear()}-${String(date.getMonth() + 1).padStart(2, "0")}-${String(date.getDate()).padStart(2, "0")} 
-            ${String(date.getHours()).padStart(2, "0")}:${String(date.getMinutes()).padStart(2, "0")}:${String(date.getSeconds()).padStart(2, "0")}`;
-            }
 
             let temp_html = `
             <div class="col">
@@ -158,7 +172,6 @@
                     <div class="card-body">
                         <h5 class="card-title">${name}</h5>
                         <p class="card-text">${comment}</p>
-                        <p class="card-text timestamp">${formattedTimestamp}</p>
                     </div>
                 </div>
             </div>`;
@@ -181,34 +194,30 @@
         let isContentLoaded = false;
 
         $("#hobby").click(async function () {
+
             if (isContentLoaded) {
-                // 콘텐츠가 이미 로드된 경우 제거
-                $('.col-md-8').empty(); // 카드 콘텐츠 제거
-                isContentLoaded = false; // 로드 상태 초기화
-                console.log("콘텐츠가 제거되었습니다.");
-                return;
+                console.log("콘텐츠가 이미 로드되었습니다.");
+                return; // 콘텐츠가 이미 추가된 경우 종료
             }
-            
-            console.log("콘텐츠를 로드합니다.");
             $('#mycards').empty();
             $('#category_btn').text("취미");
-
             //DB에서 불러와서 넣기
-            const querySnapshot = await getDocs(collection(db, "personal1_hobby"));
+            const querySnapshot = await getDocs(collection(db, "personal"));
 
             querySnapshot.forEach((doc) => {
 
                 let row = doc.data();
-                let name = row.hobby;
-                let content = row.comment;
-                let image = row.himg;
 
-                // 이미지 높이 조정정
-                let tHtml = `
+                if (row['name'] === '김지영') {
+                    let name = row.hobby;
+                    let content = row.hobbycontent;
+                    let image = row.hobbyimage;
+
+                    let tHtml = `
             <div class="col">
                 <div class="card">
                     <img src="${image}"
-                        class="card-img-top" alt="..." style="height:202px;">
+                        class="card-img-top" alt="...">
                     <div id=card_content class="card-body">
                         <h5 class="card-title">${name}</h5>
                         <p class="card-text">${content}</p>
@@ -216,63 +225,32 @@
                 </div>
             </div>`;
 
-                $(".col-md-8").append(tHtml);
-                isContentLoaded = true;
-
+                    $(".col-md-8").append(tHtml);
+                    isContentLoaded = true;
+                }
             });
 
         })
         $("#like").click(async function () {
-            if (isContentLoaded) {
-                // 콘텐츠가 이미 로드된 경우 제거
-                $('.col-md-8').empty(); // 카드 콘텐츠 제거
-                isContentLoaded = false; // 로드 상태 초기화
-                console.log("콘텐츠가 제거되었습니다.");
-                return;
-            }
             $('#mycards').remove();
             $('#category_btn').text("좋아하는 음식");
             //DB에서 불러와서 넣기
-            const querySnapshot = await getDocs(collection(db, "personal1_like"));
-
-            querySnapshot.forEach((doc) => {
-
-                let row = doc.data();
-                let name = row.food;
-                let content = row.comment;
-                let image = row.foodimg;
-
-                let tHtml = `
-                    <div class="col">
-                        <div class="card">
-                            <img src="${image}"
-                                class="card-img-top" alt="..." style="height:202px;>
-                            <div id=card_content class="card-body">
-                                <h5 class="card-title">${name}</h5>
-                                <p class="card-text">${content}</p>
-                            </div>
-                        </div>
-                    </div>`;
-
-                $(".col-md-8").append(tHtml);
-                isContentLoaded = true;
-
-            });
         })
 
     </script>
 </head>
 
 <body>
-    <div>
-        <button id="home" type="button" onclick="location.href='main.html'" class="btn btn-light">Home</button>
+    <div style="display: flex; justify-content: flex-end;">
+        <button id="home" type="button" onclick="location.href='main.html'" class="homebtn"
+            style="margin: 20px;">Home</button>
     </div>
 
     <div class="profile">
         <div class="personal_picture">
             <image
                 src="https://images.unsplash.com/photo-1446768500601-ac47e5ec3719?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1446&q=80"
-                style="width:200px; height:200px;"></image>
+                style="width: 270px; height: 200px; border-radius: 8px; background-color: white;"></image>
             <div class="address">
                 <button id="addressbtn_git" type="button" class="btn btn-light">Github</button>
                 <button id="addressbtn_insta" type="button" class="btn btn-light">Instagram</button>
@@ -280,57 +258,83 @@
         </div>
         <div>
             <div class="name_introduce">
-                <div class="text">
-                    <p><span>박성현</span></p>
+                <div class="text" style="font-weight: bold; text-align: center;">
+                    <p><span>서지원 [ISFP]</span></p>
                 </div>
-                <div class="text">
-                    <p><span>ISTJ</span></p>
+                <div class="text" style="padding: 15px;">
+                    <p><span>자기소개 내용 적기 </span></p>
                 </div>
             </div>
         </div>
     </div>
 
     <div class="select">
-        <button id="hobby" type="button" class="btn btn-light">취미</button>
-        <button id="like" type="button" class="btn btn-light">좋아하는 음식</button>
+        <!-- 버튼 내 글씨체 변경 -->
+        <button id="hobby" type="button" class="btn btn-light" style="font-family: Gowun Dodum, serif;">취미</button>
+        <button id="like" type="button" class="btn btn-light" style="font-family: Gowun Dodum, serif;">좋아하는 음식</button>
     </div>
 
     <div class="content">
-        <button id="category_btn" type="button" class="btn btn-light"><span>취미</span></button>
-        <!-- 이미지 중심으로 오도록 수정정 -->
-        <div class="mycards" style = "display: flex; justify-content: center; align-items: center;">
-            <div style="max-width: 440px;">
-                <div class="row g-0" style="display: flex; justify-content: center; align-items: center;">
-                    <!-- <div class="col-md-4">
-                         <img id="hobbyimage"
+        <button id="category_btn" type="button" class="btn btn-light"
+            style="font-family: Gowun Dodum, serif;"><span>취미</span></button>
+        <div class="mycards">
+            <div class="card mb-3" style="max-width: 540px;">
+                <div class="row g-0">
+                    <div class="col-md-4">
+                        <img id="hobbyimage"
                             src="https://biz.chosun.com/resizer/v2/OZQ55ZCZHVA5TCMY5HNQXDNNFQ.jpg?auth=57550fc06014f31f72297e6002f5b1bdb7ef0ab2776c84d83ef223157f7104ee&width=616"
-                            class="img-fluid rounded-start" alt="..." style="max-width: 200px;"> 
-                    </div>-->
+                            class="img-fluid rounded-start" alt="..." style="max-width: 200px;">
+                    </div>
                     <div class="col-md-8">
-                        <!--<div class="card-body">
-
-                        </div>-->
+                        <div class="card-body">
+                            <h5 id="hobbyname" class="card-title">취미이름</h5>
+                            <p id="hobbycontent" class="card-text">취미내용.</p>
+                        </div>
                     </div>
                 </div>
             </div>
         </div>
     </div>
 
-    <div class="guest_book">
-        <header>
-            <h1>방명록에 오신 것을 환영합니다</h1>
-        </header>
-        <main>
-            <form id="guestbook-form">
-                <input id="gname" type="text" placeholder="이름..." required />
-                <textarea id="comment" placeholder="하고 싶은 말 있으면 적어주세요..." required></textarea>
-                <button id="savebtn" type="submit">저장하기</button>
-            </form>
-            <ul class="messages" id="messages">
-                <!-- Messages will appear here -->
-            </ul>
-        </main>
-    </div>
+    <body>
+        <div style="display: flex; justify-content: center; margin: 70px auto 0px auto; ">
+            <button class = "btn btn-light" id="toggle-guestbook-btn" type="button" style="font-size: 20px;" >방명록 작성</button>
+        </div>
+        
+    
+        <div class="guest_book" id="guest-book">
+            <header>
+                <h1 class="guest_title">Welcome To Guest Book</h1>
+            </header>
+            <main>
+                <form id="guestbook-form">
+                    <input id="gname" type="text" placeholder="이름..." required />
+                    <textarea id="comment" placeholder="하고 싶은 말 있으면 적어주세요..." required></textarea>
+                    <button id="savebtn" type="submit">저장하기</button>
+                </form>
+                <ul class="messages" id="messages">
+                    <!-- Messages will appear here -->
+                </ul>
+            </main>
+        </div>
+    
+        <script>
+            const toggleGuestbookBtn = document.getElementById('toggle-guestbook-btn');
+            const guestBook = document.getElementById('guest-book');
+    
+            toggleGuestbookBtn.addEventListener('click', () => {
+                if (guestBook.style.display === 'none' || guestBook.style.display === '') {
+                    guestBook.style.display = 'block';
+                    toggleGuestbookBtn.textContent = '방명록 닫기';
+                } else {
+                    guestBook.style.display = 'none';
+                    toggleGuestbookBtn.textContent = '방명록 작성';
+                }
+            });
+        </script>
+
+    </body>
+
     <script>
         const form = document.getElementById('guestbook-form');
         const messagesList = document.getElementById('messages');
@@ -375,20 +379,28 @@
     </script>
     <style>
         body {
-            font-family: Arial, sans-serif;
+
             margin: 0;
             padding: 0;
-            background-color: #f4f4f9;
+            background-color: rgb(0, 0, 0);
+        }
+
+        .guest_book {
+            margin: 80px auto 20px auto;
         }
 
         header {
-            background-color: #6200ea;
             color: white;
-            padding: 1rem;
             text-align: center;
         }
 
+
         main {
+
+            font-family: "Gowun Dodum", serif;
+            font-weight: 400;
+            font-style: normal;
+
             max-width: 500px;
             margin: 2rem auto;
             padding: 1rem;
@@ -397,8 +409,26 @@
             border-radius: 8px;
         }
 
+        /* 방명록 제목 CSS */
         h1 {
-            margin-top: 0;
+            color: white;
+            font-family: "Sacramento", serif;
+            font-weight: 700;
+            font-size: 45px;
+            font-style: normal;
+            font-style: italic;
+            margin-bottom: 50px;
+
+            text-shadow:
+                0 0 7px rgb(100, 31, 147),
+                0 0 10px rgb(100, 31, 147),
+                0 0 21px rgb(100, 31, 147),
+                0 0 42px rgb(100, 31, 147),
+                0 0 82px rgb(100, 31, 147),
+                0 0 92px rgb(100, 31, 147),
+                0 0 102px rgb(100, 31, 147),
+                0 0 151px rgb(100, 31, 147);
+
         }
 
         form {
