@@ -63,7 +63,6 @@
 
         .address>button {
             column-gap: 10px;
-            width: 48.5%;
 
             font-family: "Tilt Neon", serif;
             font-optical-sizing: auto;
@@ -222,7 +221,7 @@
                 console.log("콘텐츠가 제거되었습니다.");
                 return;
             }
-            
+
             console.log("콘텐츠를 로드합니다.");
             $('#mycards').empty();
             $('#category_btn').text("취미");
@@ -297,14 +296,14 @@
 </head>
 
 <body>
-    <div>
-        <button id="home" type="button" onclick="location.href='main.html'" class="btn btn-light">Home</button>
+    <div style="display: flex; justify-content: flex-end;">
+        <button id="home" type="button" onclick="location.href='main.html'" class="homebtn"
+            style="margin: 20px;">Home</button>
     </div>
 
     <div class="profile">
         <div class="personal_picture">
-            <image
-                src="https://static.wikia.nocookie.net/trufax/images/c/c7/Intp.png/revision/latest?cb=20160224133050"
+            <image src="https://static.wikia.nocookie.net/trufax/images/c/c7/Intp.png/revision/latest?cb=20160224133050"
                 style="width:200px; height:200px;"></image>
             <div class="address">
                 <button id="addressbtn_git" type="button" class="btn btn-light">Github</button>
@@ -324,12 +323,13 @@
     </div>
 
     <div class="select">
-        <button id="hobby" type="button" class="btn btn-light">취미</button>
-        <button id="like" type="button" class="btn btn-light">좋아하는 음식</button>
+        <button id="hobby" type="button" class="btn btn-light" style="font-family: Gowun Dodum, serif;">취미</button>
+        <button id="like" type="button" class="btn btn-light" style="font-family: Gowun Dodum, serif;">좋아하는 음식</button>
     </div>
 
     <div class="content">
-        <button id="category_btn" type="button" class="btn btn-light"><span>취미</span></button>
+        <button id="category_btn" type="button" class="btn btn-light"
+            style="font-family: Gowun Dodum, serif;"><span>취미</span></button>
         <div class="mycards">
             <div class="card mb-3" style="max-width: 540px;">
                 <div class="row g-0">
@@ -348,154 +348,200 @@
         </div>
     </div>
 
-    <div class="guest_book">
-        <header>
-            <h1>방명록에 오신 것을 환영합니다</h1>
-        </header>
-        <main>
-            <form id="guestbook-form">
-                <input id="gname" type="text" placeholder="이름..." required />
-                <textarea id="comment" placeholder="하고 싶은 말 있으면 적어주세요..." required></textarea>
-                <button id="savebtn" type="submit">저장하기</button>
-            </form>
-            <ul class="messages" id="messages">
-                <!-- Messages will appear here -->
-            </ul>
-        </main>
-    </div>
-    <script>
-        const form = document.getElementById('guestbook-form');
-        const messagesList = document.getElementById('messages');
 
-        form.addEventListener('submit', function (event) {
-            event.preventDefault();
-            const nameInput = document.getElementById('name');
-            const messageInput = document.getElementById('message');
+    <body>
+        <div style="display: flex; justify-content: center; margin: 70px auto 0px auto; ">
+            <button class="btn btn-light" id="toggle-guestbook-btn" type="button" style="font-size: 20px;">방명록
+                작성</button>
+        </div>
 
-            if (nameInput.value.trim() === '' || messageInput.value.trim() === '') {
-                alert('Please fill in all fields.');
-                return;
+        <div class="guest_book" id="guest-book" style="display: none;">
+            <header>
+                <h1 class="guest_title">Welcome To Guest Book</h1>
+            </header>
+            <main>
+                <form id="guestbook-form">
+                    <input id="gname" type="text" placeholder="이름..." required />
+                    <textarea id="comment" placeholder="하고 싶은 말 있으면 적어주세요..." required></textarea>
+                    <button id="savebtn" type="submit">저장하기</button>
+                </form>
+                <ul class="messages" id="messages">
+                    <!-- Messages will appear here -->
+                </ul>
+            </main>
+        </div>
+
+        <script>
+            const toggleGuestbookBtn = document.getElementById('toggle-guestbook-btn');
+            const guestBook = document.getElementById('guest-book');
+    
+            toggleGuestbookBtn.addEventListener('click', () => {
+                if (guestBook.style.display === 'none' || guestBook.style.display === '') {
+                    guestBook.style.display = 'block';
+                    toggleGuestbookBtn.textContent = '방명록 닫기';
+                } else {
+                    guestBook.style.display = 'none';
+                    toggleGuestbookBtn.textContent = '방명록 작성';
+                }
+            });
+        </script>
+
+    </body>
+
+        <script>
+            const form = document.getElementById('guestbook-form');
+            const messagesList = document.getElementById('messages');
+
+            form.addEventListener('submit', function (event) {
+                event.preventDefault();
+                const nameInput = document.getElementById('name');
+                const messageInput = document.getElementById('message');
+
+                if (nameInput.value.trim() === '' || messageInput.value.trim() === '') {
+                    alert('Please fill in all fields.');
+                    return;
+                }
+
+                const newMessage = document.createElement('li');
+
+                const name = document.createElement('strong');
+                name.textContent = nameInput.value;
+                newMessage.appendChild(name);
+
+                const messageText = document.createElement('p');
+                messageText.textContent = messageInput.value;
+                newMessage.appendChild(messageText);
+
+                const timestamp = document.createElement('span');
+                timestamp.classList.add('timestamp');
+                timestamp.textContent = `Posted on: ${new Date().toLocaleString()}`;
+                newMessage.appendChild(timestamp);
+
+                const deleteButton = document.createElement('button');
+                deleteButton.textContent = 'Delete';
+                deleteButton.addEventListener('click', function () {
+                    messagesList.removeChild(newMessage);
+                });
+                newMessage.appendChild(deleteButton);
+
+                messagesList.insertBefore(newMessage, messagesList.firstChild); // Add new message to the top
+
+                nameInput.value = '';
+                messageInput.value = '';
+            });
+        </script>
+        <style>
+            body {
+                margin: 0;
+                padding: 0;
+                background-color: rgb(0, 0, 0);
             }
 
-            const newMessage = document.createElement('li');
+            .guest_book {
+                margin: 80px auto 20px auto;
+            }
 
-            const name = document.createElement('strong');
-            name.textContent = nameInput.value;
-            newMessage.appendChild(name);
+            header {
+                color: white;
+                text-align: center;
+            }
 
-            const messageText = document.createElement('p');
-            messageText.textContent = messageInput.value;
-            newMessage.appendChild(messageText);
+            main {
+                font-family: "Gowun Dodum", serif;
+                font-weight: 400;
+                font-style: normal;
 
-            const timestamp = document.createElement('span');
-            timestamp.classList.add('timestamp');
-            timestamp.textContent = `Posted on: ${new Date().toLocaleString()}`;
-            newMessage.appendChild(timestamp);
+                max-width: 500px;
+                margin: 2rem auto;
+                padding: 1rem;
+                background: white;
+                box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+                border-radius: 8px;
+            }
 
-            const deleteButton = document.createElement('button');
-            deleteButton.textContent = 'Delete';
-            deleteButton.addEventListener('click', function () {
-                messagesList.removeChild(newMessage);
-            });
-            newMessage.appendChild(deleteButton);
+            h1 {
+                color: white;
+                font-family: "Sacramento", serif;
+                font-weight: 700;
+                font-size: 45px;
+                font-style: normal;
+                font-style: italic;
+                margin-bottom: 50px;
 
-            messagesList.insertBefore(newMessage, messagesList.firstChild); // Add new message to the top
+                text-shadow:
+                    0 0 7px rgb(100, 31, 147),
+                    0 0 10px rgb(100, 31, 147),
+                    0 0 21px rgb(100, 31, 147),
+                    0 0 42px rgb(100, 31, 147),
+                    0 0 82px rgb(100, 31, 147),
+                    0 0 92px rgb(100, 31, 147),
+                    0 0 102px rgb(100, 31, 147),
+                    0 0 151px rgb(100, 31, 147);
+            }
 
-            nameInput.value = '';
-            messageInput.value = '';
-        });
-    </script>
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-            margin: 0;
-            padding: 0;
-            background-color: #f4f4f9;
-        }
+            form {
+                margin-bottom: 2rem;
+            }
 
-        header {
-            background-color: #6200ea;
-            color: white;
-            padding: 1rem;
-            text-align: center;
-        }
+            form textarea,
+            form input {
+                width: 100%;
+                margin-bottom: 1rem;
+                padding: 0.5rem;
+                border: 1px solid #ddd;
+                border-radius: 4px;
+                resize: none;
+            }
 
-        main {
-            max-width: 500px;
-            margin: 2rem auto;
-            padding: 1rem;
-            background: white;
-            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-            border-radius: 8px;
-        }
+            form button {
+                background-color: #6200ea;
+                color: white;
+                border: none;
+                padding: 0.5rem 1rem;
+                cursor: pointer;
+                border-radius: 4px;
+            }
 
-        h1 {
-            margin-top: 0;
-        }
+            form button:hover {
+                background-color: #3700b3;
+            }
 
-        form {
-            margin-bottom: 2rem;
-        }
+            .messages {
+                list-style: none;
+                padding: 0;
+            }
 
-        form textarea,
-        form input {
-            width: 100%;
-            margin-bottom: 1rem;
-            padding: 0.5rem;
-            border: 1px solid #ddd;
-            border-radius: 4px;
-            resize: none;
-        }
+            .messages li {
+                background: #f9f9f9;
+                margin-bottom: 1rem;
+                padding: 1rem;
+                border: 1px solid #ddd;
+                border-radius: 4px;
+                position: relative;
+            }
 
-        form button {
-            background-color: #6200ea;
-            color: white;
-            border: none;
-            padding: 0.5rem 1rem;
-            cursor: pointer;
-            border-radius: 4px;
-        }
+            .messages .timestamp {
+                font-size: 0.85rem;
+                color: #666;
+                margin-top: 0.5rem;
+            }
 
-        form button:hover {
-            background-color: #3700b3;
-        }
+            .messages button {
+                position: absolute;
+                top: 10px;
+                right: 10px;
+                background: #ff5252;
+                color: white;
+                border: none;
+                padding: 0.25rem 0.5rem;
+                cursor: pointer;
+                border-radius: 4px;
+            }
 
-        .messages {
-            list-style: none;
-            padding: 0;
-        }
-
-        .messages li {
-            background: #f9f9f9;
-            margin-bottom: 1rem;
-            padding: 1rem;
-            border: 1px solid #ddd;
-            border-radius: 4px;
-            position: relative;
-        }
-
-        .messages .timestamp {
-            font-size: 0.85rem;
-            color: #666;
-            margin-top: 0.5rem;
-        }
-
-        .messages button {
-            position: absolute;
-            top: 10px;
-            right: 10px;
-            background: #ff5252;
-            color: white;
-            border: none;
-            padding: 0.25rem 0.5rem;
-            cursor: pointer;
-            border-radius: 4px;
-        }
-
-        .messages button:hover {
-            background: #d32f2f;
-        }
-    </style>
-</body>
+            .messages button:hover {
+                background: #d32f2f;
+            }
+        </style>
+    </body>
 
 </html>
