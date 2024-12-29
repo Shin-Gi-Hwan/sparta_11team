@@ -211,87 +211,102 @@
             window.open("https://www.instagram.com/flamma_00", "_blank");
         })
 
+        $('.mycards').empty();
         let isContentLoaded = false;
 
+        let currentCategory = "hobby";
+
+        $(document).ready(async function () {
+            $('#category_btn').text("취미");
+            await loadHobbyContent();
+        });
+
         $("#hobby").click(async function () {
-            if (isContentLoaded) {
-                // 콘텐츠가 이미 로드된 경우 제거
-                $('.col-md-8').empty(); // 카드 콘텐츠 제거
-                isContentLoaded = false; // 로드 상태 초기화
-                console.log("콘텐츠가 제거되었습니다.");
+            if (currentCategory === "hobby") {
+                $('.mycards').empty();
+                currentCategory = "";
                 return;
             }
 
-            console.log("콘텐츠를 로드합니다.");
-            $('#mycards').empty();
+            console.log("취미 콘텐츠를 로드합니다.");
+            $('.mycards').empty();
             $('#category_btn').text("취미");
+            currentCategory = "hobby";
+            await loadHobbyContent();
+        });
 
-            //DB에서 불러와서 넣기
+        $("#like").click(async function () {
+            if (currentCategory === "like") {
+
+                $('.mycards').empty();
+                currentCategory = "";
+                return;
+            }
+
+            console.log("좋아하는 음식 콘텐츠를 로드합니다.");
+            $('.mycards').empty();
+            $('#category_btn').text("좋아하는 음식");
+            currentCategory = "like";
+            await loadLikeContent();
+        });
+
+        // 취미 콘텐츠 로드 함수
+        async function loadHobbyContent() {
             const querySnapshot = await getDocs(collection(db, "personal1_hobby"));
 
             querySnapshot.forEach((doc) => {
-
                 let row = doc.data();
-                let name = row.hobby;
-                let content = row.comment;
-                let image = row.himg;
+                    let name = row.hobby;
+                    let content = row.comment;
+                    let image = row.himg;
 
-                let tHtml = `
-            <div class="col">
-                <div class="card">
-                    <img src="${image}"
-                        class="card-img-top" alt="...">
-                    <div id=card_content class="card-body">
-                        <h5 class="card-title">${name}</h5>
-                        <p class="card-text">${content}</p>
+                    let tHtml = `
+                <div class="row g-0">
+                    <div class="col-md-4">
+                        <img id="hobbyimage"
+                            src="${image}"
+                            class="img-fluid rounded-start" alt="..." style="width: 200; height: 293px;">
                     </div>
-                </div>
-            </div>`;
+                    <div class="col-md-8">
+                        <div class="card-body">
+                            <h5 id="hobbyname" class="card-title" style="color: white">${name}</h5>
+                            <p id="hobbycontent" class="card-text" style="color: white">${content}</p>
+                        </div>
+                    </div>
+                </div>`;
 
-                $(".col-md-8").append(tHtml);
-                isContentLoaded = true;
-
+                    $(".mycards").append(tHtml);
             });
+        }
 
-        })
-        $("#like").click(async function () {
-            if (isContentLoaded) {
-                // 콘텐츠가 이미 로드된 경우 제거
-                $('.col-md-8').empty(); // 카드 콘텐츠 제거
-                isContentLoaded = false; // 로드 상태 초기화
-                console.log("콘텐츠가 제거되었습니다.");
-                return;
-            }
-            $('#mycards').remove();
-            $('#category_btn').text("좋아하는 음식");
-            //DB에서 불러와서 넣기
+        // 좋아하는 음식 콘텐츠 로드 함수
+        async function loadLikeContent() {
             const querySnapshot = await getDocs(collection(db, "personal1_like"));
 
             querySnapshot.forEach((doc) => {
-
                 let row = doc.data();
-                let name = row.food;
-                let content = row.comment;
-                let image = row.foodimg;
+                    let name = row.food;
+                    let content = row.comment;
+                    let image = row.foodimg;
 
-                let tHtml = `
-                    <div class="col">
-                        <div class="card">
-                            <img src="${image}"
-                                class="card-img-top" alt="...">
-                            <div id=card_content class="card-body">
-                                <h5 class="card-title">${name}</h5>
-                                <p class="card-text">${content}</p>
-                            </div>
+                    let tHtml = `
+                <div class="row g-0">
+                    <div class="col-md-4">
+                        <img id="hobbyimage"
+                            src="${image}"
+                            class="img-fluid rounded-start" alt="..." style="width: 200; height: 293px;">
+                    </div>
+                    <div class="col-md-8">
+                        <div class="card-body">
+                            <h5 id="hobbyname" class="card-title" style="color: white">${name}</h5>
+                            <p id="hobbycontent" class="card-text" style="color: white">${content}</p>
                         </div>
-                    </div>`;
+                    </div>
+                </div>`;
 
-                $(".col-md-8").append(tHtml);
-                isContentLoaded = true;
-
+                    $(".mycards").append(tHtml);
             });
-        })
-
+        }
     </script>
 </head>
 
