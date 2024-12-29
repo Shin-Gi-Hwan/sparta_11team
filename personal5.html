@@ -9,7 +9,7 @@
         integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <style>
-        @import url('https://fonts.googleapis.com/css2?family=Black+Han+Sans&family=Cute+Font&family=Gowun+Dodum&display=swap');
+        @import url('https://fonts.googleapis.com/css2?family=Black+Han+Sans&family=Gowun+Dodum&family=Jua&family=Kanit:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&family=Lilita+One&family=Londrina+Shadow&family=Moirai+One&family=Rubik+Dirt&family=Rubik+Vinyl&family=Sacramento&family=Tilt+Neon&display=swap');
     </style>
     <style>
         .profile,
@@ -20,6 +20,17 @@
             font-style: normal;
         }
 
+        /* 메인 페이지로 이동하는 버튼 글씨체 변경*/
+        .btn-light {
+
+            font-family: "Tilt Neon", serif;
+            font-optical-sizing: auto;
+            font-weight: 500;
+            font-style: normal;
+            font-size: 15px;
+            border-radius: 5px;
+
+        }
 
         .profile {
             display: flex;
@@ -31,19 +42,23 @@
         }
 
         .address {
-            padding-top: 5px;
-            height: 50px;
+            padding: 14px;
+            height: 70px;
             width: 200px;
+            display: flex;
+            column-gap: 15px;
+            justify-content: center;
+            flex-wrap: nowrap;
         }
 
         .address>button {
             column-gap: 10px;
-            width: 48.5%;
 
-            font-family: "Cute Font", serif;
-            font-weight: 400;
+            font-family: "Tilt Neon", serif;
+            font-optical-sizing: auto;
+            font-weight: 500;
             font-style: normal;
-            font-size: x-large;
+            font-size: 15px;
         }
 
         .name_introduce {
@@ -51,12 +66,16 @@
             height: 250px;
             width: 300px;
 
+            background-color: white;
             border: 1px solid grey;
             border-radius: 5px;
         }
 
         .text {
             margin: 10px auto 0 10px;
+            font-family: "Gowun Dodum", serif;
+            font-weight: 400;
+            font-style: normal;
         }
 
         .select {
@@ -210,7 +229,8 @@
 
 <body>
     <div>
-        <button id="home" type="button" onclick="location.href='main.html'" class="btn btn-light">Home</button>
+        <button id="home" type="button" onclick="location.href='main.html'" class="btn-light"
+            style="margin: 20px;">Home</button>
     </div>
 
     <div class="profile">
@@ -236,12 +256,14 @@
     </div>
 
     <div class="select">
-        <button id="hobby" type="button" class="btn btn-light">취미</button>
-        <button id="like" type="button" class="btn btn-light">좋아하는 음식</button>
+        <!-- 버튼 내 글씨체 변경 -->
+        <button id="hobby" type="button" class="btn btn-light" style="font-family: Gowun Dodum, serif;">취미</button>
+        <button id="like" type="button" class="btn btn-light" style="font-family: Gowun Dodum, serif;">좋아하는 음식</button>
     </div>
 
     <div class="content">
-        <button id="category_btn" type="button" class="btn btn-light"><span>취미</span></button>
+        <button id="category_btn" type="button" class="btn btn-light"
+            style="font-family: Gowun Dodum, serif;"><span>취미</span></button>
         <div class="mycards">
             <div class="card mb-3" style="max-width: 540px;">
                 <div class="row g-0">
@@ -263,7 +285,7 @@
 
     <div class="guest_book">
         <header>
-            <h1>방명록에 오신 것을 환영합니다</h1>
+            <h1 class="guest_title">방명록에 오신 것을 환영합니다</h1>
         </header>
         <main>
             <form id="guestbook-form">
@@ -320,20 +342,28 @@
     </script>
     <style>
         body {
-            font-family: Arial, sans-serif;
+            
             margin: 0;
             padding: 0;
-            background-color: #f4f4f9;
+            background-color: rgb(0, 0, 0);
+        }
+
+        .guest_book {
+            margin: 80px auto 20px auto;
         }
 
         header {
-            background-color: #6200ea;
             color: white;
-            padding: 1rem;
             text-align: center;
         }
 
+        
         main {
+
+            font-family: "Gowun Dodum", serif;
+            font-weight: 400;
+            font-style: normal;
+
             max-width: 500px;
             margin: 2rem auto;
             padding: 1rem;
@@ -342,8 +372,26 @@
             border-radius: 8px;
         }
 
+        /* 방명록 제목 CSS */
         h1 {
-            margin-top: 0;
+            color: white;
+            font-family: "Sacramento", serif;
+            font-weight: 700;
+            font-size: 45px;
+            font-style: normal;
+            font-style: italic;
+            margin-bottom: 50px;
+
+            text-shadow:
+                0 0 7px rgb(100, 31, 147),
+                0 0 10px rgb(100, 31, 147),
+                0 0 21px rgb(100, 31, 147),
+                0 0 42px rgb(100, 31, 147),
+                0 0 82px rgb(100, 31, 147),
+                0 0 92px rgb(100, 31, 147),
+                0 0 102px rgb(100, 31, 147),
+                0 0 151px rgb(100, 31, 147);
+
         }
 
         form {
