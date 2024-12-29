@@ -152,24 +152,39 @@
         $("#savebtn").click(async function () {
             let name = $('#gname').val();
             let comment = $('#comment').val();
-            let timestamp = $('#timestamp').val();
 
             let doc = {
                 'name': name,
                 'comment': comment,
                 'timestamp': new Date()
             };
+
             await addDoc(collection(db, "guestbook4"), doc);
-            alert('저장 완료!')
-            window.location.reload();
+            let formattedTimestamp = formatTimestamp(doc.timestamp);
+            let temp_html = `
+        <div class="col">
+            <div class="messages">
+                <div class="card-body">
+                    <h5 class="card-title">${doc.name}</h5>
+                    <p class="card-text">${doc.comment}</p>
+                    <p class="card-text timestamp">${formattedTimestamp}</p>
+                </div>
+            </div>
+        </div>`;
+            $('#messages').prepend(temp_html); // 최신 댓글을 위에 추가
 
+            // 입력 필드 초기화
+            $('#gname').val('');
+            $('#comment').val('');
 
-        })
+            alert('저장 완료!');
+        });
 
-        // "timestamp"는 정렬에 사용
+        // Firestore에서 댓글 가져오기 및 정렬
         let q = query(collection(db, "guestbook4"), orderBy("timestamp", "desc"));
         let docs = await getDocs(q);
 
+        // 기존 댓글을 DOM에 추가
         docs.forEach((doc) => {
             let row = doc.data();
             let name = row['name'];
@@ -178,23 +193,26 @@
 
             let formattedTimestamp = "";
             if (timestamp) {
-                const date = timestamp.toDate();
-                formattedTimestamp = `${date.getFullYear()}-${String(date.getMonth() + 1).padStart(2, "0")}-${String(date.getDate()).padStart(2, "0")} 
-            ${String(date.getHours()).padStart(2, "0")}:${String(date.getMinutes()).padStart(2, "0")}:${String(date.getSeconds()).padStart(2, "0")}`;
+                formattedTimestamp = formatTimestamp(timestamp.toDate());
             }
 
             let temp_html = `
             <div class="col">
                 <div class="messages">
                     <div class="card-body">
-                        <h5 class="card-title">${name}</h5>
-                        <p class="card-text">${comment}</p>
-                        <p class="card-text timestamp">${formattedTimestamp}</p>
-                    </div>
+                    <h5 class="card-title">${name}</h5>
+                    <p class="card-text">${comment}</p>
+                    <p class="card-text timestamp">${formattedTimestamp}</p>
                 </div>
-            </div>`;
+            </div>
+        </div>`;
             $('#messages').append(temp_html);
         });
+
+        function formatTimestamp(date) {
+            return `${date.getFullYear()}-${String(date.getMonth() + 1).padStart(2, "0")}-${String(date.getDate()).padStart(2, "0")}
+                    ${String(date.getHours()).padStart(2, "0")}:${String(date.getMinutes()).padStart(2, "0")}:${String(date.getSeconds()).padStart(2, "0")}`;
+        }
 
         // $("#home").click(async function () {
         //     window.location.href = "file:///C:/Users/sng02/OneDrive/%EB%B0%94%ED%83%95%20%ED%99%94%EB%A9%B4/sparta/mini_proj/sparta_11team/main.html";
