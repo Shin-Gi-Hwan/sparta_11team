@@ -181,24 +181,26 @@
         let isContentLoaded = false;
 
         $("#hobby").click(async function () {
-            $('#mycards').empty();
+
             if (isContentLoaded) {
                 console.log("콘텐츠가 이미 로드되었습니다.");
                 return; // 콘텐츠가 이미 추가된 경우 종료
             }
-            
+            $('#mycards').empty();
             $('#category_btn').text("취미");
             //DB에서 불러와서 넣기
-            const querySnapshot = await getDocs(collection(db, "personal1_hobby"));
+            const querySnapshot = await getDocs(collection(db, "personal"));
 
             querySnapshot.forEach((doc) => {
 
                 let row = doc.data();
-                let name = row.hobby;
-                let content = row.comment;
-                let image = row.himg;
 
-                let tHtml = `
+                if (row['name'] === '김지영') {
+                    let name = row.hobby;
+                    let content = row.hobbycontent;
+                    let image = row.hobbyimage;
+
+                    let tHtml = `
             <div class="col">
                 <div class="card">
                     <img src="${image}"
@@ -210,9 +212,9 @@
                 </div>
             </div>`;
 
-                $(".col-md-8").append(tHtml);
-                isContentLoaded = true;
-
+                    $(".col-md-8").append(tHtml);
+                    isContentLoaded = true;
+                }
             });
 
         })
@@ -220,31 +222,6 @@
             $('#mycards').remove();
             $('#category_btn').text("좋아하는 음식");
             //DB에서 불러와서 넣기
-            const querySnapshot = await getDocs(collection(db, "personal1_like"));
-
-            querySnapshot.forEach((doc) => {
-
-                let row = doc.data();
-                let name = row.food;
-                let content = row.comment;
-                let image = row.foodimg;
-
-                let tHtml = `
-                    <div class="col">
-                        <div class="card">
-                            <img src="${image}"
-                                class="card-img-top" alt="...">
-                            <div id=card_content class="card-body">
-                                <h5 class="card-title">${name}</h5>
-                                <p class="card-text">${content}</p>
-                            </div>
-                        </div>
-                    </div>`;
-
-                $(".col-md-8").append(tHtml);
-                isContentLoaded = true;
-
-            });
         })
 
     </script>
@@ -302,7 +279,12 @@
         </div>
     </div>
 
-    <div class="guest_book">
+</head>
+
+<body>
+    <button id="toggle-guestbook-btn" type="button">방명록 열기</button>
+
+    <div class="guest_book" id="guest-book">
         <header>
             <h1>방명록에 오신 것을 환영합니다</h1>
         </header>
@@ -317,6 +299,22 @@
             </ul>
         </main>
     </div>
+
+    <script>
+        const toggleGuestbookBtn = document.getElementById('toggle-guestbook-btn');
+        const guestBook = document.getElementById('guest-book');
+
+        toggleGuestbookBtn.addEventListener('click', () => {
+            if (guestBook.style.display === 'none' || guestBook.style.display === '') {
+                guestBook.style.display = 'block';
+                toggleGuestbookBtn.textContent = '방명록 닫기';
+            } else {
+                guestBook.style.display = 'none';
+                toggleGuestbookBtn.textContent = '방명록 열기';
+            }
+        });
+    </script>
+</body>
     <script>
         const form = document.getElementById('guestbook-form');
         const messagesList = document.getElementById('messages');
