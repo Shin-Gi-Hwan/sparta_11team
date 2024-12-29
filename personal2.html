@@ -178,7 +178,37 @@
             window.open("https://www.instagram.com/seonghyeo._.n/", "_blank");
         })
 
-        let isContentLoaded = false; // 콘텐츠 로드 상태를 추적
+        $('.mycards').empty();
+        const querySnapshot = await getDocs(collection(db, "personal"));
+
+        querySnapshot.forEach((doc) => {
+            let row = doc.data();
+
+            if (row['name'] === '김지영') {
+                let name = row.hobby;
+                let content = row.hobbycontent;
+                let image = row.hobbyimage;
+
+                let tHtml = `
+                <div class="row g-0">
+                    <div class="col-md-4">
+                        <img id="hobbyimage"
+                            src="${image}"
+                            class="img-fluid rounded-start" alt="..." style="width: 200; height: 295px;">
+                    </div>
+                    <div class="col-md-8">
+                        <div class="card-body">
+                            <h5 id="hobbyname" class="card-title" style="color: white">${name}</h5>
+                            <p id="hobbycontent" class="card-text" style="color: white">${content}</p>
+                        </div>
+                    </div>
+                </div>`;
+
+                $(".mycards").append(tHtml);
+            }
+        });
+
+        let isContentLoaded = true; // 콘텐츠 로드 상태를 추적
 
         $("#hobby").click(async function () {
             if (isContentLoaded) {
@@ -319,13 +349,13 @@
                 <div class="row g-0">
                     <div class="col-md-4">
                         <img id="hobbyimage"
-                            src="https://search.pstatic.net/sunny/?src=https%3A%2F%2Fyt3.googleusercontent.com%2F5d1OSu6a_n351Foyu9MgO1WE0PhTI1vPHBL0myZ5RhZXrEflBTSHHl3Zxe9NwK27uYY22Znknz8%3Ds900-c-k-c0x00ffffff-no-rj&type=a340"
+                            src=""
                             class="img-fluid rounded-start" alt="..." style="width: 200; height: 295px;">
                     </div>
                     <div class="col-md-8">
                         <div class="card-body">
-                            <h5 id="hobbyname" class="card-title" style="color: white">게임</h5>
-                            <p id="hobbycontent" class="card-text" style="color: white">롤, tft, 메이플m을 좋아합니다.</p>
+                            <h5 id="hobbyname" class="card-title" style="color: white"></h5>
+                            <p id="hobbycontent" class="card-text" style="color: white"></p>
                         </div>
                     </div>
                 </div>
@@ -392,7 +422,7 @@
     </script>
     <style>
         body {
-            
+
             margin: 0;
             padding: 0;
             background-color: rgb(0, 0, 0);
@@ -407,7 +437,7 @@
             text-align: center;
         }
 
-        
+
         main {
 
             font-family: "Gowun Dodum", serif;
