@@ -117,13 +117,17 @@
             border: 1px solid grey;
             border-radius: 5px;
         }
+        .timestamp {
+            color: gray;
+            font-size: small;
+        }
     </style>
     <script type="module">
         // Firebase SDK 라이브러리 가져오기
         import { initializeApp } from "https://www.gstatic.com/firebasejs/9.22.0/firebase-app.js";
         import { getFirestore } from "https://www.gstatic.com/firebasejs/9.22.0/firebase-firestore.js";
         import { collection, addDoc } from "https://www.gstatic.com/firebasejs/9.22.0/firebase-firestore.js";
-        import { getDocs } from "https://www.gstatic.com/firebasejs/9.22.0/firebase-firestore.js";
+        import { getDocs, query, orderBy } from "https://www.gstatic.com/firebasejs/9.22.0/firebase-firestore.js";
 
         // Firebase 구성 정보 설정
         // For Firebase JS SDK v7.20.0 and later, measurementId is optional
@@ -148,23 +152,34 @@
         $("#savebtn").click(async function () {
             let name = $('#gname').val();
             let comment = $('#comment').val();
+            let timestamp = $('#timestamp').val();
 
             let doc = {
                 'name': name,
-                'comment': comment
+                'comment': comment,
+                'timestamp': new Date()
             };
-            await addDoc(collection(db, "guestbook"), doc);
+            await addDoc(collection(db, "guestbook3"), doc);
             alert('저장 완료!')
             window.location.reload();
-
-
         })
+        
+        // "timestamp"는 정렬에 사용
+        let q = query(collection(db, "guestbook3"), orderBy("timestamp", "desc"));
+        let docs = await getDocs(q);
 
-        let docs = await getDocs(collection(db, "guestbook"));
         docs.forEach((doc) => {
             let row = doc.data();
             let name = row['name'];
             let comment = row['comment'];
+            let timestamp = row['timestamp'];
+
+            let formattedTimestamp = "";
+            if (timestamp) {
+                const date = timestamp.toDate();
+                formattedTimestamp = `${date.getFullYear()}-${String(date.getMonth() + 1).padStart(2, "0")}-${String(date.getDate()).padStart(2, "0")} 
+            ${String(date.getHours()).padStart(2, "0")}:${String(date.getMinutes()).padStart(2, "0")}:${String(date.getSeconds()).padStart(2, "0")}`;
+            }
 
             let temp_html = `
             <div class="col">
@@ -172,6 +187,7 @@
                     <div class="card-body">
                         <h5 class="card-title">${name}</h5>
                         <p class="card-text">${comment}</p>
+                        <p class="card-text timestamp">${formattedTimestamp}</p>
                     </div>
                 </div>
             </div>`;
