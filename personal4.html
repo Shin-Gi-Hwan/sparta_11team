@@ -250,7 +250,7 @@
         <div class="personal_picture">
             <image
                 src="https://images.unsplash.com/photo-1446768500601-ac47e5ec3719?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1446&q=80"
-                style="width: 270px; height: 200px; border-radius: 8px;"></image>
+                style="width: 270px; height: 200px; border-radius: 8px; background-color: white;"></image>
             <div class="address">
                 <button id="addressbtn_git" type="button" class="btn btn-light">Github</button>
                 <button id="addressbtn_insta" type="button" class="btn btn-light">Instagram</button>
@@ -296,21 +296,45 @@
         </div>
     </div>
 
-    <div class="guest_book">
-        <header>
-            <h1 class="guest_title">Welcome To Guest Book</h1>
-        </header>
-        <main>
-            <form id="guestbook-form">
-                <input id="gname" type="text" placeholder="이름..." required />
-                <textarea id="comment" placeholder="하고 싶은 말 있으면 적어주세요..." required></textarea>
-                <button id="savebtn" type="submit">저장하기</button>
-            </form>
-            <ul class="messages" id="messages">
-                <!-- Messages will appear here -->
-            </ul>
-        </main>
-    </div>
+    <body>
+        <div style="display: flex; justify-content: center; margin: 70px auto 0px auto; ">
+            <button class = "btn btn-light" id="toggle-guestbook-btn" type="button" style="font-size: 20px;" >방명록 작성</button>
+        </div>
+        
+    
+        <div class="guest_book" id="guest-book">
+            <header>
+                <h1 class="guest_title">Welcome To Guest Book</h1>
+            </header>
+            <main>
+                <form id="guestbook-form">
+                    <input id="gname" type="text" placeholder="이름..." required />
+                    <textarea id="comment" placeholder="하고 싶은 말 있으면 적어주세요..." required></textarea>
+                    <button id="savebtn" type="submit">저장하기</button>
+                </form>
+                <ul class="messages" id="messages">
+                    <!-- Messages will appear here -->
+                </ul>
+            </main>
+        </div>
+    
+        <script>
+            const toggleGuestbookBtn = document.getElementById('toggle-guestbook-btn');
+            const guestBook = document.getElementById('guest-book');
+    
+            toggleGuestbookBtn.addEventListener('click', () => {
+                if (guestBook.style.display === 'none' || guestBook.style.display === '') {
+                    guestBook.style.display = 'block';
+                    toggleGuestbookBtn.textContent = '방명록 닫기';
+                } else {
+                    guestBook.style.display = 'none';
+                    toggleGuestbookBtn.textContent = '방명록 작성';
+                }
+            });
+        </script>
+
+    </body>
+
     <script>
         const form = document.getElementById('guestbook-form');
         const messagesList = document.getElementById('messages');
@@ -389,9 +413,10 @@
         h1 {
             color: white;
             font-family: "Sacramento", serif;
-            font-weight: 650;
-            font-size: 60px;
+            font-weight: 700;
+            font-size: 45px;
             font-style: normal;
+            font-style: italic;
             margin-bottom: 50px;
 
             text-shadow:
