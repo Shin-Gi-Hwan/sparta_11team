@@ -181,13 +181,18 @@
         let isContentLoaded = false;
 
         $("#hobby").click(async function () {
-            $('#mycards').empty();
             if (isContentLoaded) {
-                console.log("콘텐츠가 이미 로드되었습니다.");
-                return; // 콘텐츠가 이미 추가된 경우 종료
+                // 콘텐츠가 이미 로드된 경우 제거
+                $('.col-md-8').empty(); // 카드 콘텐츠 제거
+                isContentLoaded = false; // 로드 상태 초기화
+                console.log("콘텐츠가 제거되었습니다.");
+                return;
             }
             
+            console.log("콘텐츠를 로드합니다.");
+            $('#mycards').empty();
             $('#category_btn').text("취미");
+
             //DB에서 불러와서 넣기
             const querySnapshot = await getDocs(collection(db, "personal1_hobby"));
 
@@ -217,6 +222,13 @@
 
         })
         $("#like").click(async function () {
+            if (isContentLoaded) {
+                // 콘텐츠가 이미 로드된 경우 제거
+                $('.col-md-8').empty(); // 카드 콘텐츠 제거
+                isContentLoaded = false; // 로드 상태 초기화
+                console.log("콘텐츠가 제거되었습니다.");
+                return;
+            }
             $('#mycards').remove();
             $('#category_btn').text("좋아하는 음식");
             //DB에서 불러와서 넣기
@@ -288,14 +300,14 @@
             <div class="card mb-3" style="max-width: 540px;">
                 <div class="row g-0">
                     <div class="col-md-4">
-                        <img id="hobbyimage"
+                        <!-- <img id="hobbyimage"
                             src="https://biz.chosun.com/resizer/v2/OZQ55ZCZHVA5TCMY5HNQXDNNFQ.jpg?auth=57550fc06014f31f72297e6002f5b1bdb7ef0ab2776c84d83ef223157f7104ee&width=616"
-                            class="img-fluid rounded-start" alt="..." style="max-width: 200px;">
+                            class="img-fluid rounded-start" alt="..." style="max-width: 200px;"> -->
                     </div>
                     <div class="col-md-8">
-                        <div class="card-body">
+                        <!--<div class="card-body">
 
-                        </div>
+                        </div>-->
                     </div>
                 </div>
             </div>
