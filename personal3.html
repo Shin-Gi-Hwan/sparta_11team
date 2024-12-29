@@ -164,7 +164,7 @@
             alert('저장 완료!')
             window.location.reload();
         })
-
+        
         // "timestamp"는 정렬에 사용
         let q = query(collection(db, "guestbook3"), orderBy("timestamp", "desc"));
         let docs = await getDocs(q);
@@ -249,13 +249,15 @@
 
         // 취미 콘텐츠 로드 함수
         async function loadHobbyContent() {
-            const querySnapshot = await getDocs(collection(db, "personal3_hobby"));
+            const querySnapshot = await getDocs(collection(db, "personal"));
 
             querySnapshot.forEach((doc) => {
                 let row = doc.data();
+
+                if (row['name'] === '김지영') {
                     let name = row.hobby;
-                    let content = row.comment;
-                    let image = row.himg;
+                    let content = row.hobbycontent;
+                    let image = row.hobbyimage;
 
                     let tHtml = `
                 <div class="row g-0">
@@ -273,18 +275,21 @@
                 </div>`;
 
                     $(".mycards").append(tHtml);
+                }
             });
         }
 
         // 좋아하는 음식 콘텐츠 로드 함수
         async function loadLikeContent() {
-            const querySnapshot = await getDocs(collection(db, "personal3_like"));
+            const querySnapshot = await getDocs(collection(db, "personal"));
 
             querySnapshot.forEach((doc) => {
                 let row = doc.data();
-                    let name = row.food;
-                    let content = row.comment;
-                    let image = row.foodimg;
+
+                if (row['name'] === '김지영') {
+                    let name = row.like;
+                    let content = row.likecomment;
+                    let image = row.likeimg;
 
                     let tHtml = `
                 <div class="row g-0">
@@ -302,6 +307,7 @@
                 </div>`;
 
                     $(".mycards").append(tHtml);
+                }
             });
         }
     </script>
@@ -360,10 +366,10 @@
     </div>
 
     <body>
-        <!-- <div style="display: flex; justify-content: center; margin: 70px auto 0px auto; ">
+        <div style="display: flex; justify-content: center; margin: 70px auto 0px auto; ">
             <button class="btn btn-light" id="toggle-guestbook-btn" type="button" style="font-size: 20px;">방명록
                 작성</button>
-        </div> -->
+        </div>
 
 
         <div class="guest_book" id="guest-book" style="display: none;">
