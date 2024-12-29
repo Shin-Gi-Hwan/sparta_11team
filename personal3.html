@@ -249,15 +249,13 @@
 
         // 취미 콘텐츠 로드 함수
         async function loadHobbyContent() {
-            const querySnapshot = await getDocs(collection(db, "personal"));
+            const querySnapshot = await getDocs(collection(db, "personal3_hobby"));
 
             querySnapshot.forEach((doc) => {
                 let row = doc.data();
-
-                if (row['name'] === '김지영') {
                     let name = row.hobby;
-                    let content = row.hobbycontent;
-                    let image = row.hobbyimage;
+                    let content = row.comment;
+                    let image = row.himg;
 
                     let tHtml = `
                 <div class="row g-0">
@@ -275,21 +273,18 @@
                 </div>`;
 
                     $(".mycards").append(tHtml);
-                }
             });
         }
 
         // 좋아하는 음식 콘텐츠 로드 함수
         async function loadLikeContent() {
-            const querySnapshot = await getDocs(collection(db, "personal"));
+            const querySnapshot = await getDocs(collection(db, "personal3_like"));
 
             querySnapshot.forEach((doc) => {
                 let row = doc.data();
-
-                if (row['name'] === '김지영') {
-                    let name = row.like;
-                    let content = row.likecomment;
-                    let image = row.likeimg;
+                    let name = row.food;
+                    let content = row.comment;
+                    let image = row.foodimg;
 
                     let tHtml = `
                 <div class="row g-0">
@@ -307,7 +302,6 @@
                 </div>`;
 
                     $(".mycards").append(tHtml);
-                }
             });
         }
     </script>
