@@ -1,0 +1,305 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>11조-Next Level</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Black+Han+Sans&family=Gowun+Dodum&family=Jua&family=Kanit:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&family=Lilita+One&family=Londrina+Shadow&family=Moirai+One&family=Rubik+Dirt&family=Rubik+Vinyl&family=Sacramento&display=swap');
+
+        /* 팀 이름 글씨 폰트 */
+        .text {
+            color: white;
+            font-family: "Sacramento", serif;
+            font-weight: 1000;
+            font-size: 50px;
+            font-style: normal;
+            font-style: italic;
+
+            text-shadow:
+                0 0 7px rgb(100, 31, 147),
+                0 0 10px rgb(100, 31, 147),
+                0 0 21px rgb(100, 31, 147),
+                0 0 42px rgb(100, 31, 147),
+                0 0 82px rgb(100, 31, 147),
+                0 0 92px rgb(100, 31, 147),
+                0 0 102px rgb(100, 31, 147),
+                0 0 151px rgb(100, 31, 147);
+
+        }
+
+        .mytitle {
+            height: 150px;
+            width: 500px;
+            color: black;
+            margin: 60px auto 0px auto;
+
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+        }
+
+
+        .team_intro {
+            height: 100px;
+            width: 800px;
+            color: white;
+            margin: 20px auto 0px auto;
+
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+
+            text-align: center;
+            font-family: "Sacramento", serif;
+            font-weight: 1500;
+            text-shadow:
+                0px 0px 7px #8f7777,
+                0px 0px 0px rgb(101 46 77 / 69%),
+                0px 0px 20px rgb(110, 35, 160)
+        }
+
+        .cards {
+            width: 1600px;
+            height: 350px;
+            margin: 100px auto 0px auto;
+        }
+
+        .card {
+            margin: 15px;
+            overflow: hidden;
+            transform: scale(1.16);
+            object-fit: cover;
+            transition: opacity 0.5s, transform 1s;
+            cursor: pointer;
+            position: relative;
+        }
+
+        .card:hover {
+            transform: scale(1);
+            opacity: 0.5;
+        }
+
+        /* 상세보기 부분 위치 조정*/
+        .read {
+            position: absolute;
+            top: 100px;
+            left: 0;
+            width: 100%;
+            text-align: center;
+            color: #fff;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            opacity: 0;
+            transition: all 0.5s;
+
+            text-shadow: 1px 1px 10px rgba(0, 0, 0, .5);
+        }
+
+        .card:hover .read {
+            transform: translateY(0);
+            opacity: 1;
+        }
+
+        /* 카드 내 이름 정렬 */
+        .list-group-item {
+            text-align: center;
+            font-weight: bold;
+
+        }
+
+        /* 카드 내 여백 */
+        .card-body {
+            padding: 5px 10px 5px 10px;
+        }
+
+        /* 카드 내 이미지 크기 */
+        .card-img-top {
+            height: 230px;
+        }
+
+        .mybtn {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+        }
+
+        body {
+            background-color: rgb(0, 0, 0);
+        }
+    </style>
+    <script type="module">
+        // // Firebase SDK 라이브러리 가져오기
+        // import { initializeApp } from "https://www.gstatic.com/firebasejs/9.22.0/firebase-app.js";
+        // import { getFirestore } from "https://www.gstatic.com/firebasejs/9.22.0/firebase-firestore.js";
+        // import { collection, addDoc } from "https://www.gstatic.com/firebasejs/9.22.0/firebase-firestore.js";
+        // import { getDocs } from "https://www.gstatic.com/firebasejs/9.22.0/firebase-firestore.js";
+
+        // // Firebase 구성 정보 설정
+        // // For Firebase JS SDK v7.20.0 and later, measurementId is optional
+        // const firebaseConfig = {
+        //     apiKey: "AIzaSyB3TEWGa8SbSA9csbPKJE7nBw4MayWNV64",
+        //     authDomain: "nextlevel-11da5.firebaseapp.com",
+        //     projectId: "nextlevel-11da5",
+        //     storageBucket: "nextlevel-11da5.firebasestorage.app",
+        //     messagingSenderId: "578758665908",
+        //     appId: "1:578758665908:web:3aed2393759dcf54d999e1",
+        //     measurementId: "G-68DBKGKB98"
+        // };
+
+        // // Firebase 인스턴스 초기화
+        // const app = initializeApp(firebaseConfig);
+        // const db = getFirestore(app);
+
+        // Import the functions you need from the SDKs you need
+        // import { initializeApp } from "firebase/app";
+        // import { getAnalytics } from "firebase/analytics";
+        // import { collection, addDoc } from "https://www.gstatic.com/firebasejs/9.22.0/firebase-firestore.js";
+        // import { getDocs } from "https://www.gstatic.com/firebasejs/9.22.0/firebase-firestore.js";
+
+        // const firebaseConfig = {
+        //     apiKey: "AIzaSyCvkj6_8aBnEgzGrwMTECgC1r-vSVruMWk",
+        //     authDomain: "introduction-53159.firebaseapp.com",
+        //     projectId: "introduction-53159",
+        //     storageBucket: "introduction-53159.firebasestorage.app",
+        //     messagingSenderId: "209311127187",
+        //     appId: "1:209311127187:web:6789ebc5336fc73c285f66",
+        //     measurementId: "G-2CEL3KEPJS"
+        // };
+
+        // // Initialize Firebase
+        // const app = initializeApp(firebaseConfig);
+        // const db = getFireStore(app);
+
+        // let docs = await getDocs(collection(db, "personal"));
+        // docs.forEach((doc) => {
+        //     let row = doc.data();
+        //     console.log(row);
+        //     let name = $("#name").val();
+        //     let image = $("#img").val();
+
+        //     let t_html = `
+        //     <div class="col">
+        //         <div class="card">
+        //             <img src="${image}"
+        //                 class="card-img-top" alt="...">
+        //             <div class="card-body">
+        //                 <h5 class="list-group-item">${name}</h5>
+        //             </div>
+        //         </div>
+        //     </div>`;
+        //     $('#card').append(t_html);
+        // });
+
+        let i = 0;
+        function typing() {
+            const content = " 팀 11 :  Next Level  ";
+
+            if (i < content.length) {
+                let txt = content.charAt(i);
+                document.querySelector('.text').innerHTML += txt;
+                i++;
+            }
+        }
+        setInterval(typing, 200)
+    </script>
+</head>
+
+<body>
+
+    <div class="mytitle" data-trigger>
+        <h1 class="text"></h1>
+    </div>
+    <div class="team_intro">
+        <h3>개발자로 성장하고자 하는 내향인들의 자기소개 공간입니다. <br> 상세보기를 눌러 팀원들의 소개를 확인해보세요! </h3>
+    </div>
+    <div class="cards">
+        <div class="row row-cols-1 row-cols-md-5 g-4">
+            <div class="col">
+                <div class="card" onclick="location.href='personal1.html'">
+                    <img id="img"
+                        src="https://item.kakaocdn.net/do/09d3d5a5833fcc8025111fdbf44cf37fff1cf2d4e1bdc11c5e3dd410963d18c7"
+                        class="card-img-top" alt="...">
+                    <div class="card-body">
+                        <ul class="list-group list-group-flush">
+                            <li id="name" class="list-group-item">김지영</li>
+                            <li class="list-group-item"></li>
+                        </ul>
+                    </div>
+                    <div class="read">
+                        <h2>상세보기</h2>
+                    </div>
+                </div>
+            </div>
+            <div class="col">
+                <div class="card" onclick="location.href='personal2.html'">
+                    <img src="https://search.pstatic.net/common/?src=http%3A%2F%2Fblogfiles.naver.net%2FMjAyMzA2MDdfMTM0%2FMDAxNjg2MTM3Mjg4OTE3.tDTM9gof-h_KjhkH3ZaAr9MHtPC6w9Ir19GQVGuJh78g.FUCZ5SZruVcoMGP-KMDMsGpPFjxjdtPE1bYRmtP9Lm8g.PNG.zxc46055%2F3effd4a1437af491adefa54936d611d7.png&type=a340"
+                        class="card-img-top" alt="...">
+                    <div class="card-body">
+                        <ul class="list-group list-group-flush">
+                            <li class="list-group-item">박성현</li>
+                            <li class="list-group-item"></li>
+                        </ul>
+                    </div>
+                    <div class="read">
+                        <h2>상세보기</h2>
+                    </div>
+                </div>
+            </div>
+            <div class="col">
+                <div class="card" onclick="location.href='personal3.html'">
+                    <img src="https://m.c-star.co.kr/web/product/big/202106/6419caaaf3881fa5f58db26afc29cd70.jpg"
+                        class="card-img-top" alt="...">
+                    <div class="card-body">
+                        <ul class="list-group list-group-flush">
+                            <li class="list-group-item">신기환</li>
+                            <li class="list-group-item"></li>
+                        </ul>
+                    </div>
+                    <div class="read">
+                        <h2>상세보기</h2>
+                    </div>
+                </div>
+            </div>
+            <div class="col">
+                <div class="card" onclick="location.href='personal4.html'">
+                    <img src="https://i.pinimg.com/736x/6c/4a/70/6c4a701002975a3eefe99fc8c222070a.jpg"
+                        class="card-img-top" alt="...">
+                    <div class="card-body">
+                        <ul class="list-group list-group-flush">
+                            <li class="list-group-item">서지원</li>
+                            <li class="list-group-item"></li>
+                        </ul>
+                    </div>
+                    <div class="read">
+                        <h2>상세보기</h2>
+                    </div>
+                </div>
+            </div>
+            <div class="col">
+                <div class="card" onclick="location.href='personal5.html'">
+                    <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQeJC7S7S_vPx6mdrLrkAE-j6D6YRgkxYtG5w&s"
+                        class="card-img-top" alt="...">
+                    <div class="card-body">
+                        <ul class="list-group list-group-flush">
+                            <li class="list-group-item">오명제</li>
+                            <li class="list-group-item"></li>
+                        </ul>
+                    </div>
+                    <div class="read">
+                        <h2>상세보기</h2>
+                    </div>
+                </div>
+            </div>
+        </div>
+</body>
+
+</html>
