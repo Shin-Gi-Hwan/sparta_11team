@@ -198,22 +198,21 @@
             }
 
             let temp_html = `
-    <div class="col">
-        <div class="messages">
-            <div class="card-body">
-                <h5 class="card-title">${name}</h5>
-                <p class="card-text">${comment}</p>
-                <p class="card-text timestamp">${formattedTimestamp}</p>
+            <div class="col">
+                <div class="messages">
+                    <div class="card-body">
+                    <h5 class="card-title">${name}</h5>
+                    <p class="card-text">${comment}</p>
+                    <p class="card-text timestamp">${formattedTimestamp}</p>
+                </div>
             </div>
-        </div>
-    </div>`;
+        </div>`;
             $('#messages').append(temp_html);
         });
 
-        // 날짜 포맷팅 함수
         function formatTimestamp(date) {
             return `${date.getFullYear()}-${String(date.getMonth() + 1).padStart(2, "0")}-${String(date.getDate()).padStart(2, "0")}
-    ${String(date.getHours()).padStart(2, "0")}:${String(date.getMinutes()).padStart(2, "0")}:${String(date.getSeconds()).padStart(2, "0")}`;
+                    ${String(date.getHours()).padStart(2, "0")}:${String(date.getMinutes()).padStart(2, "0")}:${String(date.getSeconds()).padStart(2, "0")}`;
         }
 
         // $("#home").click(async function () {
@@ -329,7 +328,7 @@
 
 <body>
     <div style="display: flex; justify-content: flex-end;">
-        <button id="home" type="button" onclick="location.href='main.html'" class="homebtn"
+        <button id="home" type="button" onclick="location.href='index.html'" class="homebtn"
             style="margin: 20px;">Home</button>
     </div>
 
